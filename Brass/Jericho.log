@@ -1,0 +1,31 @@
+# -*-compilation-*-
+Changing working directory to `C:/Documents and Settings/Administrator/Desktop/Music/Lilypond Music/Pep Band'
+Processing `C:/Documents and Settings/Administrator/Desktop/Music/Lilypond Music/Pep Band/Jericho.ly'
+Parsing...
+C:/Documents and Settings/Administrator/Desktop/Music/Lilypond Music/Pep Band/Jericho.ly:64:16: error: syntax error, unexpected \tempo
+        \midi { 
+                \tempo 4=120}
+Interpreting music... 
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+C:/Documents and Settings/Administrator/Desktop/Music/Lilypond Music/Pep Band/Jericho.ly:30:21: warning: Two simultaneous key-change events, junking this one
+        \clef treble 
+                     \key c\major 
+C:/Documents and Settings/Administrator/Desktop/Music/Lilypond Music/Pep Band/Jericho.ly:29:8: warning: Previous key-change event here
+	
+        \key g\major
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+[8]
+Preprocessing graphical objects...
+Interpreting music... 
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+MIDI output to `Jericho.midi'...
+Track... 

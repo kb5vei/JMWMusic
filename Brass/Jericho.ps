@@ -1,0 +1,1455 @@
+%!PS-Adobe-3.0
+%%Creator: LilyPond 2.8.6
+%%Pages: 1
+%%PageOrder: Ascend
+%%Orientation: Portrait
+%%DocumentMedia: a4 595.28 844.72 80 () ()
+%%DocumentSuppliedResources: font CenturySchL-Bold
+%%DocumentSuppliedResources: font CenturySchL-Roma
+%%DocumentSuppliedResources: font Emmentaler-18
+%%DocumentSuppliedResources: font Emmentaler-20
+%%EndComments
+
+%%BeginDefaults
+%%PageMedia: a4
+%%EndDefaults
+%%BeginProlog
+
+%%BeginFont: CenturySchL-Bold
+(C:/Program Files/LilyPond/usr/bin/../share/lilypond/current/fonts/otf/CenturySchL-Bold.otf) (r) file .loadfont
+
+%%EndFont
+
+%%BeginFont: CenturySchL-Roma
+(C:/Program Files/LilyPond/usr/bin/../share/lilypond/current/fonts/otf/CenturySchL-Roma.otf) (r) file .loadfont
+
+%%EndFont
+
+%%BeginFont: Emmentaler-18
+(C:/Program Files/LilyPond/usr/bin/../share/lilypond/current/fonts/otf/emmentaler-18.otf) (r) file .loadfont
+
+%%EndFont
+
+%%BeginFont: Emmentaler-20
+(C:/Program Files/LilyPond/usr/bin/../share/lilypond/current/fonts/otf/emmentaler-20.otf) (r) file .loadfont
+
+%%EndFont
+
+/magfontemmentaler-18mXVo { /Emmentaler-18 findfont 006.2623 output-scale div scalefont } bind def
+/magfontemmentaler-20mXVo { /Emmentaler-20 findfont 007.0292 output-scale div scalefont } bind def
+/lily-output-units 2.83464566929134 def %% millimeter
+/staff-line-thickness 0.1 def
+/line-width 108.120472440945 def
+/paper-size (a4) def
+/staff-height 4.0 def
+/output-scale 1.75729901757299 def
+/page-height 169.57842519685 def
+/page-width 119.50157480315 def
+%%BeginResource: procset (music-drawing-routines.ps) 1 0
+%!PS-Adobe-1.0: music-drawing-routines.ps
+%
+% Functions for direct and embedded PostScript
+
+% Careful with double % as comment prefix.
+% Any %%X comment is interpreted as DSC comments.
+
+% TODO: use dicts or prefixes to prevent namespace pollution.
+
+/pdfmark where
+{pop} {userdict /pdfmark /cleartomark load put} ifelse
+
+% from adobe tech note 5002. 
+/BeginEPSF { %def
+    /b4_Inc_state save def % Save state for cleanup
+    /dict_count countdictstack def % Count objects on dict stack
+    /op_count count 1 sub def % Count objects on operand stack
+    userdict begin % Push userdict on dict stack
+    /showpage { } def % Redefine showpage, { } = null proc
+    0 setgray 0 setlinecap % Prepare graphics state
+    1 setlinewidth 0 setlinejoin
+    10 setmiterlimit [ ] 0 setdash newpath
+    /languagelevel where % If level not equal to 1 then
+    {pop languagelevel % set strokeadjust and
+    1 ne % overprint to their defaults.
+      {false setstrokeadjust false setoverprint
+      } if
+    } if
+} bind def
+
+
+/EndEPSF { %def
+  count op_count sub {pop} repeat % Clean up stacks
+  countdictstack dict_count sub {end} repeat
+  b4_Inc_state restore
+} bind def 
+
+
+%<font> <encoding> <name> reencode-font
+/reencode-font
+{
+    /name exch def
+    /encoding exch def
+    dup length
+    dict begin {
+	1 index /FID ne {def} {pop
+	pop} ifelse
+    }
+    forall
+    /Encoding encoding
+    def currentdict
+    end
+    name exch definefont
+} bind def
+
+
+% llx lly urx ury URI
+/mark_URI
+{
+    /command exch def
+    /ury exch def
+    /urx exch def
+    /lly exch def
+    /llx exch def
+    [
+	/Rect [ llx lly urx ury ]
+	/Border [ 0 0 0 ]
+
+        /Action
+	    <<
+		/Subtype /URI
+		/URI command
+	    >>
+        /Subtype /Link
+    /ANN
+    pdfmark
+}
+bind def
+
+/set_tex_dimen
+{
+	cvr def
+} bind def
+
+
+
+/euclidean_length
+{
+	1 copy mul exch 1 copy mul add sqrt
+} bind def
+
+% FIXME.  translate to middle of box.
+% Nice rectangle with rounded corners
+/draw_box % breapth width depth height
+{
+%	currentdict /testing known {
+		%% real thin lines for testing
+		/blot 0.005 def
+%	}{
+%		/blot blot-diameter def
+%	} ifelse
+
+	0 setlinecap
+	blot setlinewidth
+	1 setlinejoin
+
+	blot 2 div sub /h exch def
+	blot 2 div sub /d exch def
+	blot 2 div sub /w exch def
+	blot 2 div sub /b exch def
+
+	b neg d neg moveto
+	b w add 0 rlineto
+	0 d h add rlineto
+	b w add neg 0 rlineto
+	0 d h add neg rlineto
+
+	currentdict /testing known {
+		%% outline only, for testing:
+		stroke
+	}{
+		closepath gsave stroke grestore fill
+	} ifelse
+} bind def
+
+
+/draw_round_box % breapth width depth height blot
+{
+	/blot exch def
+
+	0 setlinecap
+	blot setlinewidth
+	1 setlinejoin
+
+	blot 2 div sub /h exch def
+	blot 2 div sub /d exch def
+	blot 2 div sub /w exch def
+	blot 2 div sub /b exch def
+
+	b neg d neg moveto
+	b w add 0 rlineto
+	0 d h add rlineto
+	b w add neg 0 rlineto
+	0 d h add neg rlineto
+
+	currentdict /testing known {
+		%% outline only, for testing:
+		stroke
+	}{
+		closepath gsave stroke grestore fill
+	} ifelse
+} bind def
+
+/draw_polygon % x(n) y(n) x(n-1) y(n-1) ... x(1) y(1) n blot fill
+{
+	/fillp exch def
+	/blot exch def
+
+	0 setlinecap
+	blot setlinewidth
+	1 setlinejoin
+
+	/points exch def
+	2 copy
+	moveto
+	1 1 points { pop lineto } for
+	closepath 
+	fillp {
+		gsave stroke grestore fill
+	}{
+		stroke
+	} ifelse
+} bind def
+
+/draw_repeat_slash % width slope thick
+{
+	1 setlinecap
+	1 setlinejoin
+
+	/beamthick exch def
+	/slope exch def
+	/width exch def
+	beamthick beamthick slope div euclidean_length
+	  /xwid exch def
+	0 0 moveto
+	xwid 0  rlineto
+	width slope width mul rlineto
+	xwid neg 0 rlineto
+      %  width neg width angle sin mul neg rlineto
+	closepath fill
+} bind def
+
+% this is for drawing slurs.
+/draw_bezier_sandwich  % thickness controls
+{
+    % round ending and round beginning
+    1 setlinejoin 1 setlinecap
+	setlinewidth
+	moveto
+	curveto
+	lineto
+	curveto
+	closepath
+	gsave
+	fill
+	grestore
+	stroke
+} bind def
+
+/draw_dot % x1 y2 R
+{
+%	0 360 arc fill stroke
+	0 360 arc closepath fill stroke
+} bind def
+
+/draw_circle % R T F
+{
+	/filled exch def
+	setlinewidth
+	dup 0 moveto
+	0 exch 0 exch
+	0 360 arc closepath
+	gsave stroke grestore
+	filled { fill } if 
+} bind def
+
+
+% JUNKME. use color & circle. 
+/draw_white_dot % x1 y2 R
+{
+%	0 360 arc fill stroke
+	0 360 arc closepath % fill stroke
+gsave
+ 1 setgray fill
+grestore
+%	0 360 arc closepath % fill stroke
+  0.05 setlinewidth 0 setgray stroke
+} bind def
+
+
+% JUNKME: Use color.  
+/draw_white_text  % text scale font
+{
+  %font
+  findfont
+  %scale
+  exch scalefont setfont
+  1 setgray
+  0 0 moveto
+  %-0.05 -0.05 moveto
+  % text
+  show
+} bind def
+
+
+/draw_dashed_line % dash thickness dx dy
+{
+	1 setlinecap
+	1 setlinejoin
+	setdash
+	setlinewidth
+	0 0 moveto
+	lineto
+	stroke
+} bind def
+
+/draw_dashed_slur % dash thickness controls
+{
+	1 setlinecap
+	1 setlinejoin
+	setdash
+	setlinewidth
+	8 -2 roll
+	moveto
+	curveto
+	stroke
+} bind def
+
+
+%end music-drawing-routines.ps
+
+%%EndResource
+%%BeginResource: procset (lilyponddefs.ps) 1 0
+%!PS-Adobe-2.0: lilyponddefs.ps
+% TODO:
+%  * junk all magic, start-line/stop-line just: placebox @ x.y
+%
+% Functions for direct PostScript output
+
+% /setgray { 1 add } bind def
+
+% To let gs load fonts from builddir, do:
+% export GS_LIB=$(pwd)/mf/out:/usr/share/texmf/fonts/type1/bluesky/cm
+
+
+/set-ps-scale-to-lily-scale {
+	lily-output-units output-scale mul
+	lily-output-units output-scale mul scale
+} bind def
+
+
+/init-paper {
+	gsave
+	clippath pathbbox newpath
+	/paper-height exch def
+	/paper-width exch def pop pop pop
+	% FIXME
+	/top-margin 2 def
+	paper-width line-width sub 2 div /left-margin exch def
+	grestore
+} bind def
+
+/init-lilypond-parameters {
+	staff-line-thickness setlinewidth
+	staff-height init-paper
+} bind def
+
+
+% end lilyponddefs.ps
+
+%%EndResource
+%%EndProlog
+%%BeginSetup
+init-lilypond-parameters
+%%EndSetup
+
+%%Page: 1 1
+%%BeginPageSetup
+%%EndPageSetup
+gsave 0 paper-height translate set-ps-scale-to-lily-scale 
+gsave 005.6906 -05.0000 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ grestore
+grestore
+gsave 091.5720 -28.8894 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /r glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /r glyphshow grestore 0.83 0.00 rmoveto 
+ gsave /period glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /J glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.02 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /W glyphshow grestore 2.12 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /m glyphshow grestore 1.95 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.02 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ grestore
+grestore
+gsave 094.6561 -25.3894 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /S glyphshow grestore 1.40 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /u glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /t glyphshow grestore 0.85 0.00 rmoveto 
+ gsave /h glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /r glyphshow grestore 1.02 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /S glyphshow grestore 1.40 0.00 rmoveto 
+ gsave /p glyphshow grestore 1.26 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /r glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /t glyphshow grestore 0.85 0.00 rmoveto 
+ gsave /u glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.68 0.00 rmoveto 
+ grestore
+grestore
+gsave 037.2869 -21.8894 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Bold  findfont 4.3369140625 output-scale div scalefont setfont
+ gsave /F glyphshow grestore 1.66 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.50 0.00 rmoveto 
+ gsave /r glyphshow grestore 1.30 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.72 0.00 rmoveto 
+ gsave /t glyphshow grestore 1.06 0.00 rmoveto 
+ gsave /w glyphshow grestore 2.19 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.50 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.72 0.00 rmoveto 
+ gsave /T glyphshow grestore 1.82 0.00 rmoveto 
+ gsave /r glyphshow grestore 1.35 0.00 rmoveto 
+ gsave /u glyphshow grestore 1.71 0.00 rmoveto 
+ gsave /m glyphshow grestore 2.39 0.00 rmoveto 
+ gsave /p glyphshow grestore 1.64 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.43 0.00 rmoveto 
+ gsave /t glyphshow grestore 1.06 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.72 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.50 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.71 0.00 rmoveto 
+ gsave /d glyphshow grestore 1.64 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.72 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.50 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.72 0.00 rmoveto 
+ gsave /T glyphshow grestore 1.82 0.00 rmoveto 
+ gsave /r glyphshow grestore 1.30 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.50 0.00 rmoveto 
+ gsave /m glyphshow grestore 2.39 0.00 rmoveto 
+ gsave /b glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.50 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.71 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.43 0.00 rmoveto 
+ grestore
+grestore
+gsave 052.8789 -18.3894 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Bold  findfont 6.1357421875 output-scale div scalefont setfont
+ gsave /J glyphshow grestore 2.25 0.00 rmoveto 
+ gsave /e glyphshow grestore 2.01 0.00 rmoveto 
+ gsave /r glyphshow grestore 1.86 0.00 rmoveto 
+ gsave /i glyphshow grestore 1.30 0.00 rmoveto 
+ gsave /c glyphshow grestore 1.95 0.00 rmoveto 
+ gsave /h glyphshow grestore 2.39 0.00 rmoveto 
+ gsave /o glyphshow grestore 2.12 0.00 rmoveto 
+ grestore
+grestore
+gsave 092.1798 -53.2502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 113.6210 -53.2502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 049.1074 -53.2502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 014.2264 -39.2502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 014.2264 -38.2502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 014.2264 -37.2502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 014.2264 -36.2502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 014.2264 -35.2502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 070.6436 -53.2502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 014.2264 -47.2502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 014.2264 -46.2502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 014.2264 -45.2502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 014.2264 -44.2502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 014.2264 -43.2502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 014.2264 -55.2502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 014.2264 -54.2502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 014.2264 -53.2502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 014.2264 -52.2502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 014.2264 -51.2502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+78.13 -54.30 79.13 -52.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:40:10:17) mark_URI
+gsave 078.1275 -53.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+gsave 032.2566 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 000.8122 002.0633 000.0800 draw_round_box
+grestore
+gsave 072.3385 -56.0602 translate
+0 0 moveto
+002.9845 000.2000 002.9845 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 035.1511 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 000.3122 002.1900 000.0800 draw_round_box
+grestore
+80.71 -53.30 82.02 -52.20 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:40:12:19) mark_URI
+gsave 080.7059 -52.7502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 032.1916 -51.1869 translate
+0 0 moveto
+002.9845 000.3324 002.9845 -00.0676 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 029.2971 -51.3135 translate
+0 0 moveto
+002.9845 000.3324 002.9845 -00.0676 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 026.4026 -51.4402 translate
+0 0 moveto
+002.9845 000.3324 002.9845 -00.0676 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 080.8359 -56.2102 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.d3 glyphshow 
+grestore
+gsave 080.7709 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 003.0000 000.3122 000.0800 draw_round_box
+grestore
+40.42 -54.30 41.74 -53.20 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:38:18:25) mark_URI
+gsave 040.4239 -53.7502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+83.60 -53.30 84.92 -52.20 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:40:18:25) mark_URI
+gsave 083.6004 -52.7502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 083.6654 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 003.0000 000.3122 000.0800 draw_round_box
+grestore
+43.32 -53.80 44.63 -52.70 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:38:20:27) mark_URI
+gsave 043.3184 -53.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+81.56 -52.03 84.06 -51.54 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:40:16:23) mark_URI
+gsave 080.7059 -53.2502 translate
+0 0 moveto
+001.4319 001.7487 002.7788 001.7487 003.3526 001.2250 000.8581 001.2250 002.7788 001.8687 001.4319 001.8687 000.8581 001.2250 003.3526 001.2250 000.0800 draw_bezier_sandwich
+grestore
+46.21 -53.30 47.53 -52.20 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:38:24:31) mark_URI
+gsave 046.2129 -52.7502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+88.07 -54.50 89.02 -51.69 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:40:23:30) mark_URI
+gsave 088.0732 -53.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.2 glyphshow 
+grestore
+gsave 043.3184 -56.1235 translate
+0 0 moveto
+002.9845 000.2662 002.9845 -00.1338 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 040.4239 -56.1869 translate
+0 0 moveto
+002.9845 000.2662 002.9845 -00.1338 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 037.5294 -56.2502 translate
+0 0 moveto
+002.9845 000.2662 002.9845 -00.1338 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 050.8673 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 002.0000 000.8122 000.0800 draw_round_box
+grestore
+93.87 -52.80 95.19 -51.70 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:41:1:8) mark_URI
+gsave 093.8747 -52.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 093.9397 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 002.0000 000.8122 000.0800 draw_round_box
+grestore
+53.70 -52.80 55.01 -51.70 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:39:3:10) mark_URI
+gsave 053.6968 -52.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+56.59 -54.30 57.59 -52.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:39:5:12) mark_URI
+gsave 056.5913 -53.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+gsave 050.8023 -55.2502 translate
+0 0 moveto
+002.9845 000.2000 002.9845 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+105.14 -52.80 106.45 -51.70 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:41:13:20) mark_URI
+gsave 105.1366 -52.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+103.76 -52.03 104.94 -51.72 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:41:11:18) mark_URI
+gsave 102.2421 -53.2502 translate
+0 0 moveto
+001.8356 001.5166 002.3751 001.5166 002.6945 001.2250 001.5162 001.2250 002.3751 001.6366 001.8356 001.6366 001.5162 001.2250 002.6945 001.2250 000.0800 draw_bezier_sandwich
+grestore
+59.17 -52.80 60.49 -51.70 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:39:7:14) mark_URI
+gsave 059.1697 -52.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+62.06 -52.80 63.38 -51.70 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:39:12:19) mark_URI
+gsave 062.0642 -52.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+60.69 -52.03 61.86 -51.72 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:39:10:17) mark_URI
+gsave 059.1697 -53.2502 translate
+0 0 moveto
+001.8356 001.5166 002.3751 001.5166 002.6945 001.2250 001.5162 001.2250 002.3751 001.6366 001.8356 001.6366 001.5162 001.2250 002.6945 001.2250 000.0800 draw_bezier_sandwich
+grestore
+96.77 -52.80 98.09 -51.70 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:41:4:11) mark_URI
+gsave 096.7692 -52.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+66.54 -54.50 67.49 -51.69 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:39:15:22) mark_URI
+gsave 066.5370 -53.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.2 glyphshow 
+grestore
+gsave 096.8342 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 002.0000 000.8122 000.0800 draw_round_box
+grestore
+99.66 -54.30 100.66 -52.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:41:6:13) mark_URI
+gsave 099.6637 -53.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+25.22 -34.40 32.37 -31.20 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:14:1:8) mark_URI
+gsave 025.2164 -33.8725 translate
+0 0 moveto
+-01.0421 001.1721 -00.2495 002.6727 000.0433 draw_round_box
+grestore
+gsave 025.2164 -33.8725 translate
+0 0 moveto
+magfontemmentaler-18mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 026.9885 -34.3660 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /equal glyphshow grestore 1.33 0.00 rmoveto 
+ grestore
+grestore
+gsave 028.8177 -34.3660 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /one glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /two glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /zero glyphshow grestore 1.23 0.00 rmoveto 
+ grestore
+grestore
+gsave 093.8747 -55.2502 translate
+0 0 moveto
+002.9845 000.2000 002.9845 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 026.4676 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 000.8122 001.8100 000.0800 draw_round_box
+grestore
+102.24 -52.80 103.56 -51.70 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:41:8:15) mark_URI
+gsave 102.2421 -52.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 075.2980 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 002.8100 000.3122 000.0800 draw_round_box
+grestore
+gsave 102.3721 -55.7102 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.d3 glyphshow 
+grestore
+gsave 102.3071 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 002.5000 000.8122 000.0800 draw_round_box
+grestore
+33.90 -54.30 35.22 -53.20 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:38:12:19) mark_URI
+gsave 033.8999 -53.7502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 037.5944 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 003.0000 -00.1878 000.0800 draw_round_box
+grestore
+gsave 036.3794 -53.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 040.4889 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 002.9367 -00.6878 000.0800 draw_round_box
+grestore
+109.61 -54.50 110.56 -51.69 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:41:16:23) mark_URI
+gsave 109.6094 -53.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.2 glyphshow 
+grestore
+gsave 046.2779 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 002.8100 000.3122 000.0800 draw_round_box
+grestore
+25.22 -54.80 26.53 -53.70 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:38:1:8) mark_URI
+gsave 025.2164 -54.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 015.0264 -38.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /clefs.G glyphshow 
+grestore
+gsave 021.5164 -37.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /timesig.C44 glyphshow 
+grestore
+gsave 015.0264 -46.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /clefs.G glyphshow 
+grestore
+18.53 -44.75 19.63 -41.75 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:29:1:8) mark_URI
+gsave 018.5264 -43.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.2 glyphshow 
+grestore
+gsave 021.5164 -45.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /timesig.C44 glyphshow 
+grestore
+gsave 105.2016 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 002.5000 000.8122 000.0800 draw_round_box
+grestore
+gsave 015.0264 -52.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /clefs.F glyphshow 
+grestore
+18.53 -54.85 20.37 -50.85 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:37:19:19) mark_URI
+gsave 018.6464 -54.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 019.5664 -52.7502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 059.2997 -55.7102 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.d3 glyphshow 
+grestore
+gsave 059.2347 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 002.5000 000.8122 000.0800 draw_round_box
+grestore
+gsave 021.5164 -53.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /timesig.C44 glyphshow 
+grestore
+72.34 -53.30 73.65 -52.20 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:40:1:8) mark_URI
+gsave 072.3385 -52.7502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+31.01 -54.80 32.32 -53.70 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:38:8:15) mark_URI
+gsave 031.0054 -54.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+50.80 -52.80 52.12 -51.70 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:39:1:8) mark_URI
+gsave 050.8023 -52.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+37.53 -53.80 38.85 -52.70 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:38:14:21) mark_URI
+gsave 037.5294 -53.2502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 043.3834 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 002.8733 -00.1878 000.0800 draw_round_box
+grestore
+gsave 001.9167 -37.8136 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /T glyphshow grestore 1.51 0.00 rmoveto 
+ gsave /r glyphshow grestore 1.03 0.00 rmoveto 
+ gsave /u glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /m glyphshow grestore 1.95 0.00 rmoveto 
+ gsave /p glyphshow grestore 1.26 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /t glyphshow grestore 0.85 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /one glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ grestore
+grestore
+gsave 053.7618 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 002.0000 000.8122 000.0800 draw_round_box
+grestore
+28.11 -55.30 29.43 -54.20 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:38:6:13) mark_URI
+gsave 028.1109 -54.7502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 001.8484 -45.8136 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /T glyphshow grestore 1.51 0.00 rmoveto 
+ gsave /r glyphshow grestore 1.03 0.00 rmoveto 
+ gsave /u glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /m glyphshow grestore 1.95 0.00 rmoveto 
+ gsave /p glyphshow grestore 1.26 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /t glyphshow grestore 0.85 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /two glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ grestore
+grestore
+gsave 029.3621 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 001.3122 001.9367 000.0800 draw_round_box
+grestore
+gsave 002.4022 -54.0526 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /T glyphshow grestore 1.51 0.00 rmoveto 
+ gsave /r glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /m glyphshow grestore 1.95 0.00 rmoveto 
+ gsave /b glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ grestore
+grestore
+gsave 072.4035 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 002.8100 000.3122 000.0800 draw_round_box
+grestore
+gsave 012.9164 -34.9752 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /brackettips.up glyphshow 
+grestore
+gsave 012.9164 -55.5252 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /brackettips.down glyphshow 
+grestore
+gsave 012.9164 -45.2502 translate
+0 0 moveto
+000.0000 000.4500 010.0950 010.0950 000.0000 draw_round_box
+grestore
+gsave 062.1292 -53.2502 translate
+0 0 moveto
+000.0650 000.0650 002.5000 000.8122 000.0800 draw_round_box
+grestore
+gsave 014.1664 -45.2502 translate
+0 0 moveto
+000.0000 000.1600 010.0500 010.0500 000.1000 draw_round_box
+grestore
+75.23 -53.30 76.55 -52.20 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:40:6:13) mark_URI
+gsave 075.2330 -52.7502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 065.2686 -66.9075 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 087.0821 -66.9075 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 039.7177 -66.9075 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 112.7210 -66.9075 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 113.2110 -66.9075 translate
+0 0 moveto
+000.0000 000.6000 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 005.6906 -68.9075 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -67.9075 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -66.9075 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -65.9075 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -64.9075 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 067.1298 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 002.5000 000.8122 000.0800 draw_round_box
+grestore
+gsave 015.5818 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 000.8122 001.8100 000.0800 draw_round_box
+grestore
+gsave 018.6633 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 001.3122 001.9367 000.0800 draw_round_box
+grestore
+gsave 021.7448 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 000.8122 002.0633 000.0800 draw_round_box
+grestore
+gsave 024.8263 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 000.3122 002.1900 000.0800 draw_round_box
+grestore
+71.91 -66.96 73.23 -65.86 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:45:6:13) mark_URI
+gsave 071.9116 -66.4075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+71.67 -64.91 73.47 -63.91 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:45:9:16) mark_URI
+gsave 072.5697 -64.4075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /scripts.sforzato glyphshow 
+grestore
+gsave 021.6798 -64.8442 translate
+0 0 moveto
+003.1715 000.3320 003.1715 -00.0680 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 018.5983 -64.9708 translate
+0 0 moveto
+003.1715 000.3320 003.1715 -00.0680 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 015.5168 -65.0975 translate
+0 0 moveto
+003.1715 000.3320 003.1715 -00.0680 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 071.9766 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 003.0000 000.3122 000.0800 draw_round_box
+grestore
+30.47 -67.96 31.79 -66.86 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:43:19:26) mark_URI
+gsave 030.4731 -67.4075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+77.49 -67.46 78.81 -66.36 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:45:12:19) mark_URI
+gsave 077.4935 -66.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+77.25 -65.91 79.05 -64.91 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:45:15:22) mark_URI
+gsave 078.1516 -65.4075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /scripts.sforzato glyphshow 
+grestore
+33.55 -67.46 34.87 -66.36 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:43:21:28) mark_URI
+gsave 033.5546 -66.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 077.5585 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 003.0000 -00.1878 000.0800 draw_round_box
+grestore
+36.64 -66.96 37.95 -65.86 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:43:25:32) mark_URI
+gsave 036.6361 -66.4075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 076.3435 -66.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 033.5546 -69.7808 translate
+0 0 moveto
+003.1715 000.2660 003.1715 -00.1340 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 030.4731 -69.8442 translate
+0 0 moveto
+003.1715 000.2660 003.1715 -00.1340 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 027.3916 -69.9075 translate
+0 0 moveto
+003.1715 000.2660 003.1715 -00.1340 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+82.24 -67.96 83.55 -66.86 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:45:18:25) mark_URI
+gsave 082.2353 -67.4075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 041.5789 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 002.0000 000.8122 000.0800 draw_round_box
+grestore
+81.99 -69.91 83.79 -68.91 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:45:19:26) mark_URI
+gsave 082.8933 -69.4075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /scripts.sforzato glyphshow 
+grestore
+gsave 083.4864 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 000.3122 003.0000 000.0800 draw_round_box
+grestore
+88.88 -68.46 90.19 -67.36 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:46:1:8) mark_URI
+gsave 088.8783 -67.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+44.60 -66.46 45.91 -65.36 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:44:4:11) mark_URI
+gsave 044.5954 -65.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 090.1295 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 000.8122 002.0000 000.0800 draw_round_box
+grestore
+47.68 -67.96 48.68 -66.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:44:6:13) mark_URI
+gsave 047.6769 -66.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+gsave 041.5139 -68.9075 translate
+0 0 moveto
+003.1715 000.2000 003.1715 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 050.5722 -69.3675 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.d3 glyphshow 
+grestore
+gsave 050.5072 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 002.5000 000.8122 000.0800 draw_round_box
+grestore
+gsave 053.5887 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 002.5000 000.8122 000.0800 draw_round_box
+grestore
+gsave 059.1706 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 003.0000 -00.1878 000.0800 draw_round_box
+grestore
+gsave 057.9556 -66.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+91.96 -68.46 93.28 -67.36 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:46:6:13) mark_URI
+gsave 091.9598 -67.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 062.2521 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 002.8100 000.3122 000.0800 draw_round_box
+grestore
+gsave 093.2110 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 000.8122 002.0000 000.0800 draw_round_box
+grestore
+67.06 -66.46 68.38 -65.36 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:45:1:8) mark_URI
+gsave 067.0648 -65.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+66.82 -64.91 68.62 -63.91 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:45:3:10) mark_URI
+gsave 067.7229 -64.4075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /scripts.sforzato glyphshow 
+grestore
+94.16 -68.46 95.47 -67.36 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:46:12:19) mark_URI
+gsave 094.1587 -67.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 095.4098 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 000.8122 002.0000 000.0800 draw_round_box
+grestore
+14.33 -68.46 15.65 -67.36 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:43:1:8) mark_URI
+gsave 014.3306 -67.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+20.49 -68.46 21.81 -67.36 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:43:9:16) mark_URI
+gsave 020.4936 -67.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+96.36 -68.46 97.67 -67.36 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:46:16:23) mark_URI
+gsave 096.3575 -67.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 093.1460 -65.7175 translate
+0 0 moveto
+002.2888 000.2000 002.2888 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 093.1460 -64.9075 translate
+0 0 moveto
+002.2888 000.2000 002.2888 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 090.0645 -64.9075 translate
+0 0 moveto
+003.1715 000.2000 003.1715 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+27.39 -67.46 28.71 -66.36 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:43:15:22) mark_URI
+gsave 027.3916 -66.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 097.6087 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 000.8122 002.0000 000.0800 draw_round_box
+grestore
+gsave 033.6196 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 002.8733 -00.1878 000.0800 draw_round_box
+grestore
+99.44 -68.46 100.76 -67.36 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:46:21:28) mark_URI
+gsave 099.4390 -67.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 100.6902 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 000.8122 002.0000 000.0800 draw_round_box
+grestore
+41.51 -66.46 42.83 -65.36 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:44:1:8) mark_URI
+gsave 041.5139 -65.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+102.52 -68.46 103.84 -67.36 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:46:25:32) mark_URI
+gsave 102.5205 -67.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 044.6604 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 002.0000 000.8122 000.0800 draw_round_box
+grestore
+gsave 097.5437 -64.9075 translate
+0 0 moveto
+003.1715 000.2000 003.1715 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 103.8367 -64.4475 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.u3 glyphshow 
+grestore
+gsave 103.7717 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 000.8122 002.5000 000.0800 draw_round_box
+grestore
+50.44 -66.46 51.76 -65.36 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:44:8:15) mark_URI
+gsave 050.4422 -65.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+51.96 -65.68 53.32 -65.34 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:44:11:18) mark_URI
+gsave 050.4422 -66.9075 translate
+0 0 moveto
+001.8771 001.5598 002.5206 001.5598 002.8815 001.2250 001.5162 001.2250 002.5206 001.6798 001.8771 001.6798 001.5162 001.2250 002.8815 001.2250 000.0800 draw_bezier_sandwich
+grestore
+gsave 005.6028 -63.8234 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.0673828125 output-scale div scalefont setfont
+ gsave /five glyphshow grestore 0.96 0.00 rmoveto 
+ grestore
+grestore
+108.79 -68.16 109.74 -65.35 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:46:32:39) mark_URI
+gsave 108.7854 -66.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.2 glyphshow 
+grestore
+17.41 -68.96 18.73 -67.86 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:43:7:14) mark_URI
+gsave 017.4121 -68.4075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 006.4906 -65.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /clefs.F glyphshow 
+grestore
+gsave 010.1106 -67.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 011.0306 -66.4075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 026.2416 -66.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 036.7011 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 002.8100 000.3122 000.0800 draw_round_box
+grestore
+gsave 027.4566 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 003.0000 -00.1878 000.0800 draw_round_box
+grestore
+106.02 -67.96 107.02 -66.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:46:29:36) mark_URI
+gsave 106.0200 -66.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+53.52 -66.46 54.84 -65.36 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:44:13:20) mark_URI
+gsave 053.5237 -65.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+62.19 -66.96 63.50 -65.86 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:44:21:28) mark_URI
+gsave 062.1871 -66.4075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 030.5381 -66.9075 translate
+0 0 moveto
+000.0650 000.0650 002.9367 -00.6878 000.0800 draw_round_box
+grestore
+59.11 -67.46 60.42 -66.36 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:44:16:23) mark_URI
+gsave 059.1056 -66.9075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+23.58 -67.96 24.89 -66.86 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Jericho.ly:43:13:20) mark_URI
+gsave 023.5751 -67.4075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 059.1056 -69.9075 translate
+0 0 moveto
+003.1715 000.3980 003.1715 -00.0020 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 031.4397 -163.1346 translate
+0 0 moveto
+0.03 -0.44 56.59 1.64 (http://lilypond.org/web/) mark_URI
+grestore
+gsave 031.4397 -163.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /M glyphshow grestore 2.08 0.00 rmoveto 
+ gsave /u glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.02 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /c glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /g glyphshow grestore 1.25 0.00 rmoveto 
+ gsave /r glyphshow grestore 0.98 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.16 0.00 rmoveto 
+ gsave /v glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /g glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /b glyphshow grestore 1.17 0.00 rmoveto 
+ gsave /y glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /L glyphshow grestore 1.47 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.62 0.00 rmoveto 
+ gsave /y glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /P glyphshow grestore 1.47 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /d glyphshow grestore 1.26 0.00 rmoveto 
+ grestore
+grestore
+gsave 061.6638 -163.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ grestore
+grestore
+gsave 062.2638 -163.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /two glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /period glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /eight glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /period glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /six glyphshow grestore 1.23 0.00 rmoveto 
+ grestore
+grestore
+gsave 067.6780 -163.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /emdash glyphshow grestore 2.19 0.00 rmoveto 
+ grestore
+grestore
+gsave 070.4632 -163.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /w glyphshow grestore 1.71 0.00 rmoveto 
+ gsave /w glyphshow grestore 1.71 0.00 rmoveto 
+ gsave /w glyphshow grestore 1.54 0.00 rmoveto 
+ gsave /period glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.62 0.00 rmoveto 
+ gsave /y glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /p glyphshow grestore 1.26 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /d glyphshow grestore 1.26 0.00 rmoveto 
+ gsave /period glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /r glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /g glyphshow grestore 1.20 0.00 rmoveto 
+ grestore
+grestore
+gsave 052.2393 -160.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /P glyphshow grestore 1.47 0.00 rmoveto 
+ gsave /u glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /b glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /c glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /D glyphshow grestore 1.71 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /m glyphshow grestore 1.95 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ grestore
+grestore
+stroke grestore 
+showpage
+%%Trailer
+%%EOF

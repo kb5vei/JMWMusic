@@ -1,0 +1,31 @@
+# -*-compilation-*-
+Changing working directory to `J:/backup/Backup/Music/Lilypond Music/Pep Band'
+Processing `J:/backup/Backup/Music/Lilypond Music/Pep Band/Grapes of Wrath short.ly'
+Parsing...
+J:/backup/Backup/Music/Lilypond Music/Pep Band/Grapes of Wrath short.ly:120:16: error: syntax error, unexpected \tempo
+        \midi { 
+                \tempo 4=120}
+Interpreting music... 
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+[8][11]
+Preprocessing graphical objects...
+Interpreting music... 
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+MIDI output to `Grapes of Wrath short.midi'...
+Layout output to `Grapes of Wrath short.ps'...
+Converting to `Grapes of Wrath short.pdf'...
+error: failed files: "J:\\backup\\Backup\\Music\\Lilypond Music\\Pep Band\\Grapes of Wrath short.ly"

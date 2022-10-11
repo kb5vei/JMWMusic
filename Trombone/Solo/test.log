@@ -1,0 +1,13 @@
+# -*-compilation-*-
+Changing working directory to `C:/Documents and Settings/Administrator/Desktop/Music/Lilypond Music/Solo'
+Processing `C:/Documents and Settings/Administrator/Desktop/Music/Lilypond Music/Solo/test.ly'
+Parsing...
+C:/Documents and Settings/Administrator/Desktop/Music/Lilypond Music/Solo/test.ly: 0: warning: no \version statement found, please add
+
+\version "2.10.16"
+
+for future compatibility
+Interpreting music... [4]
+Preprocessing graphical objects...
+Layout output to `test.ps'...
+Converting to `test.pdf'...

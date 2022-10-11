@@ -1,0 +1,35 @@
+# -*-compilation-*-
+Changing working directory to `C:/Documents and Settings/Administrator/Desktop/Music/Lilypond Music/Pep Band'
+Processing `C:/Documents and Settings/Administrator/Desktop/Music/Lilypond Music/Pep Band/army.ly'
+Parsing...
+C:/Documents and Settings/Administrator/Desktop/Music/Lilypond Music/Pep Band/army.ly:143:16: error: syntax error, unexpected \tempo
+        \midi { 
+                \tempo 4=120}
+Interpreting music... 
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+C:/Documents and Settings/Administrator/Desktop/Music/Lilypond Music/Pep Band/army.ly:48:21: warning: Two simultaneous key-change events, junking this one
+        \clef treble 
+                     \key d\major 
+C:/Documents and Settings/Administrator/Desktop/Music/Lilypond Music/Pep Band/army.ly:47:8: warning: Previous key-change event here
+	
+        \key c\major
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+[8][16][18]
+Preprocessing graphical objects...
+Interpreting music... 
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+warning: can't find property type-check for `instrument' (translation-type?).  perhaps a typing error?
+warning: doing assignment anyway
+MIDI output to `army.midi'...
+Track... 

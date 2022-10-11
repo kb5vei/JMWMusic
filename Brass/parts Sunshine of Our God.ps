@@ -1,0 +1,2181 @@
+%!PS-Adobe-3.0
+%%Creator: LilyPond 2.8.6
+%%Pages: 1
+%%PageOrder: Ascend
+%%Orientation: Portrait
+%%DocumentMedia: a4 595.28 844.72 80 () ()
+%%DocumentSuppliedResources: font CenturySchL-Bold
+%%DocumentSuppliedResources: font CenturySchL-Roma
+%%DocumentSuppliedResources: font Emmentaler-18
+%%DocumentSuppliedResources: font Emmentaler-20
+%%DocumentSuppliedResources: font feta-alphabet13
+%%EndComments
+
+%%BeginDefaults
+%%PageMedia: a4
+%%EndDefaults
+%%BeginProlog
+
+%%BeginFont: CenturySchL-Bold
+(C:/Program Files/LilyPond/usr/bin/../share/lilypond/current/fonts/otf/CenturySchL-Bold.otf) (r) file .loadfont
+
+%%EndFont
+
+%%BeginFont: CenturySchL-Roma
+(C:/Program Files/LilyPond/usr/bin/../share/lilypond/current/fonts/otf/CenturySchL-Roma.otf) (r) file .loadfont
+
+%%EndFont
+
+%%BeginFont: Emmentaler-18
+(C:/Program Files/LilyPond/usr/bin/../share/lilypond/current/fonts/otf/emmentaler-18.otf) (r) file .loadfont
+
+%%EndFont
+
+%%BeginFont: Emmentaler-20
+(C:/Program Files/LilyPond/usr/bin/../share/lilypond/current/fonts/otf/emmentaler-20.otf) (r) file .loadfont
+
+%%EndFont
+
+%%BeginFont: feta-alphabet13
+(C:/Program Files/LilyPond/usr/bin/../share/lilypond/current/fonts/type1/feta-alphabet13.pfa) (r) file .loadfont
+
+%%EndFont
+
+/magfontemmentaler-18mXVo { /Emmentaler-18 findfont 006.2623 output-scale div scalefont } bind def
+/magfontemmentaler-20mXVo { /Emmentaler-20 findfont 007.0292 output-scale div scalefont } bind def
+/lily-output-units 2.83464566929134 def %% millimeter
+/staff-line-thickness 0.1 def
+/line-width 108.120472440945 def
+/paper-size (a4) def
+/staff-height 4.0 def
+/output-scale 1.75729901757299 def
+/page-height 169.57842519685 def
+/page-width 119.50157480315 def
+%%BeginResource: procset (music-drawing-routines.ps) 1 0
+%!PS-Adobe-1.0: music-drawing-routines.ps
+%
+% Functions for direct and embedded PostScript
+
+% Careful with double % as comment prefix.
+% Any %%X comment is interpreted as DSC comments.
+
+% TODO: use dicts or prefixes to prevent namespace pollution.
+
+/pdfmark where
+{pop} {userdict /pdfmark /cleartomark load put} ifelse
+
+% from adobe tech note 5002. 
+/BeginEPSF { %def
+    /b4_Inc_state save def % Save state for cleanup
+    /dict_count countdictstack def % Count objects on dict stack
+    /op_count count 1 sub def % Count objects on operand stack
+    userdict begin % Push userdict on dict stack
+    /showpage { } def % Redefine showpage, { } = null proc
+    0 setgray 0 setlinecap % Prepare graphics state
+    1 setlinewidth 0 setlinejoin
+    10 setmiterlimit [ ] 0 setdash newpath
+    /languagelevel where % If level not equal to 1 then
+    {pop languagelevel % set strokeadjust and
+    1 ne % overprint to their defaults.
+      {false setstrokeadjust false setoverprint
+      } if
+    } if
+} bind def
+
+
+/EndEPSF { %def
+  count op_count sub {pop} repeat % Clean up stacks
+  countdictstack dict_count sub {end} repeat
+  b4_Inc_state restore
+} bind def 
+
+
+%<font> <encoding> <name> reencode-font
+/reencode-font
+{
+    /name exch def
+    /encoding exch def
+    dup length
+    dict begin {
+	1 index /FID ne {def} {pop
+	pop} ifelse
+    }
+    forall
+    /Encoding encoding
+    def currentdict
+    end
+    name exch definefont
+} bind def
+
+
+% llx lly urx ury URI
+/mark_URI
+{
+    /command exch def
+    /ury exch def
+    /urx exch def
+    /lly exch def
+    /llx exch def
+    [
+	/Rect [ llx lly urx ury ]
+	/Border [ 0 0 0 ]
+
+        /Action
+	    <<
+		/Subtype /URI
+		/URI command
+	    >>
+        /Subtype /Link
+    /ANN
+    pdfmark
+}
+bind def
+
+/set_tex_dimen
+{
+	cvr def
+} bind def
+
+
+
+/euclidean_length
+{
+	1 copy mul exch 1 copy mul add sqrt
+} bind def
+
+% FIXME.  translate to middle of box.
+% Nice rectangle with rounded corners
+/draw_box % breapth width depth height
+{
+%	currentdict /testing known {
+		%% real thin lines for testing
+		/blot 0.005 def
+%	}{
+%		/blot blot-diameter def
+%	} ifelse
+
+	0 setlinecap
+	blot setlinewidth
+	1 setlinejoin
+
+	blot 2 div sub /h exch def
+	blot 2 div sub /d exch def
+	blot 2 div sub /w exch def
+	blot 2 div sub /b exch def
+
+	b neg d neg moveto
+	b w add 0 rlineto
+	0 d h add rlineto
+	b w add neg 0 rlineto
+	0 d h add neg rlineto
+
+	currentdict /testing known {
+		%% outline only, for testing:
+		stroke
+	}{
+		closepath gsave stroke grestore fill
+	} ifelse
+} bind def
+
+
+/draw_round_box % breapth width depth height blot
+{
+	/blot exch def
+
+	0 setlinecap
+	blot setlinewidth
+	1 setlinejoin
+
+	blot 2 div sub /h exch def
+	blot 2 div sub /d exch def
+	blot 2 div sub /w exch def
+	blot 2 div sub /b exch def
+
+	b neg d neg moveto
+	b w add 0 rlineto
+	0 d h add rlineto
+	b w add neg 0 rlineto
+	0 d h add neg rlineto
+
+	currentdict /testing known {
+		%% outline only, for testing:
+		stroke
+	}{
+		closepath gsave stroke grestore fill
+	} ifelse
+} bind def
+
+/draw_polygon % x(n) y(n) x(n-1) y(n-1) ... x(1) y(1) n blot fill
+{
+	/fillp exch def
+	/blot exch def
+
+	0 setlinecap
+	blot setlinewidth
+	1 setlinejoin
+
+	/points exch def
+	2 copy
+	moveto
+	1 1 points { pop lineto } for
+	closepath 
+	fillp {
+		gsave stroke grestore fill
+	}{
+		stroke
+	} ifelse
+} bind def
+
+/draw_repeat_slash % width slope thick
+{
+	1 setlinecap
+	1 setlinejoin
+
+	/beamthick exch def
+	/slope exch def
+	/width exch def
+	beamthick beamthick slope div euclidean_length
+	  /xwid exch def
+	0 0 moveto
+	xwid 0  rlineto
+	width slope width mul rlineto
+	xwid neg 0 rlineto
+      %  width neg width angle sin mul neg rlineto
+	closepath fill
+} bind def
+
+% this is for drawing slurs.
+/draw_bezier_sandwich  % thickness controls
+{
+    % round ending and round beginning
+    1 setlinejoin 1 setlinecap
+	setlinewidth
+	moveto
+	curveto
+	lineto
+	curveto
+	closepath
+	gsave
+	fill
+	grestore
+	stroke
+} bind def
+
+/draw_dot % x1 y2 R
+{
+%	0 360 arc fill stroke
+	0 360 arc closepath fill stroke
+} bind def
+
+/draw_circle % R T F
+{
+	/filled exch def
+	setlinewidth
+	dup 0 moveto
+	0 exch 0 exch
+	0 360 arc closepath
+	gsave stroke grestore
+	filled { fill } if 
+} bind def
+
+
+% JUNKME. use color & circle. 
+/draw_white_dot % x1 y2 R
+{
+%	0 360 arc fill stroke
+	0 360 arc closepath % fill stroke
+gsave
+ 1 setgray fill
+grestore
+%	0 360 arc closepath % fill stroke
+  0.05 setlinewidth 0 setgray stroke
+} bind def
+
+
+% JUNKME: Use color.  
+/draw_white_text  % text scale font
+{
+  %font
+  findfont
+  %scale
+  exch scalefont setfont
+  1 setgray
+  0 0 moveto
+  %-0.05 -0.05 moveto
+  % text
+  show
+} bind def
+
+
+/draw_dashed_line % dash thickness dx dy
+{
+	1 setlinecap
+	1 setlinejoin
+	setdash
+	setlinewidth
+	0 0 moveto
+	lineto
+	stroke
+} bind def
+
+/draw_dashed_slur % dash thickness controls
+{
+	1 setlinecap
+	1 setlinejoin
+	setdash
+	setlinewidth
+	8 -2 roll
+	moveto
+	curveto
+	stroke
+} bind def
+
+
+%end music-drawing-routines.ps
+
+%%EndResource
+%%BeginResource: procset (lilyponddefs.ps) 1 0
+%!PS-Adobe-2.0: lilyponddefs.ps
+% TODO:
+%  * junk all magic, start-line/stop-line just: placebox @ x.y
+%
+% Functions for direct PostScript output
+
+% /setgray { 1 add } bind def
+
+% To let gs load fonts from builddir, do:
+% export GS_LIB=$(pwd)/mf/out:/usr/share/texmf/fonts/type1/bluesky/cm
+
+
+/set-ps-scale-to-lily-scale {
+	lily-output-units output-scale mul
+	lily-output-units output-scale mul scale
+} bind def
+
+
+/init-paper {
+	gsave
+	clippath pathbbox newpath
+	/paper-height exch def
+	/paper-width exch def pop pop pop
+	% FIXME
+	/top-margin 2 def
+	paper-width line-width sub 2 div /left-margin exch def
+	grestore
+} bind def
+
+/init-lilypond-parameters {
+	staff-line-thickness setlinewidth
+	staff-height init-paper
+} bind def
+
+
+% end lilyponddefs.ps
+
+%%EndResource
+%%EndProlog
+%%BeginSetup
+init-lilypond-parameters
+%%EndSetup
+
+%%Page: 1 1
+%%BeginPageSetup
+%%EndPageSetup
+gsave 0 paper-height translate set-ps-scale-to-lily-scale 
+gsave 005.6906 -05.0000 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ grestore
+grestore
+gsave 088.9168 -25.3894 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /W glyphshow grestore 2.12 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /m glyphshow grestore 1.95 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.02 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /d glyphshow grestore 1.26 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /I glyphshow grestore 0.89 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /c glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /r glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /v glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ grestore
+grestore
+gsave 055.5170 -25.3894 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Bold  findfont 4.3369140625 output-scale div scalefont setfont
+ gsave /B glyphshow grestore 1.91 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.50 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.43 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.23 0.00 rmoveto 
+ grestore
+grestore
+gsave 048.0503 -21.8894 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Bold  findfont 4.3369140625 output-scale div scalefont setfont
+ gsave /F glyphshow grestore 1.66 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.50 0.00 rmoveto 
+ gsave /r glyphshow grestore 1.30 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.72 0.00 rmoveto 
+ gsave /S glyphshow grestore 1.64 0.00 rmoveto 
+ gsave /P glyphshow grestore 1.88 0.00 rmoveto 
+ gsave /S glyphshow grestore 1.64 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.72 0.00 rmoveto 
+ gsave /P glyphshow grestore 1.80 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.43 0.00 rmoveto 
+ gsave /p glyphshow grestore 1.64 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.72 0.00 rmoveto 
+ gsave /B glyphshow grestore 1.91 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.50 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.71 0.00 rmoveto 
+ gsave /d glyphshow grestore 1.64 0.00 rmoveto 
+ grestore
+grestore
+gsave 033.0142 -18.3894 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Bold  findfont 6.1357421875 output-scale div scalefont setfont
+ gsave /S glyphshow grestore 2.32 0.00 rmoveto 
+ gsave /u glyphshow grestore 2.39 0.00 rmoveto 
+ gsave /n glyphshow grestore 2.39 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.74 0.00 rmoveto 
+ gsave /h glyphshow grestore 2.39 0.00 rmoveto 
+ gsave /i glyphshow grestore 1.30 0.00 rmoveto 
+ gsave /n glyphshow grestore 2.39 0.00 rmoveto 
+ gsave /e glyphshow grestore 2.01 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /o glyphshow grestore 2.12 0.00 rmoveto 
+ gsave /f glyphshow grestore 1.37 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /t glyphshow grestore 1.48 0.00 rmoveto 
+ gsave /h glyphshow grestore 2.39 0.00 rmoveto 
+ gsave /e glyphshow grestore 2.01 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /I glyphshow grestore 1.54 0.00 rmoveto 
+ gsave /n glyphshow grestore 2.28 0.00 rmoveto 
+ gsave /v glyphshow grestore 2.12 0.00 rmoveto 
+ gsave /i glyphshow grestore 1.30 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.74 0.00 rmoveto 
+ gsave /i glyphshow grestore 1.30 0.00 rmoveto 
+ gsave /b glyphshow grestore 2.25 0.00 rmoveto 
+ gsave /l glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /e glyphshow grestore 2.01 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /G glyphshow grestore 2.90 0.00 rmoveto 
+ gsave /o glyphshow grestore 2.12 0.00 rmoveto 
+ gsave /d glyphshow grestore 2.32 0.00 rmoveto 
+ grestore
+grestore
+gsave 069.8425 -35.9502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 014.2264 -37.9502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 014.2264 -36.9502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 014.2264 -35.9502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 014.2264 -34.9502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 014.2264 -33.9502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 047.7614 -35.9502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 093.9860 -35.9502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 005.6906 -38.9502 translate
+0 0 moveto
+-24.6300 026.6043 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -38.9502 translate
+0 0 moveto
+-32.4637 034.4380 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -39.9502 translate
+0 0 moveto
+-32.4637 034.4380 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -38.9502 translate
+0 0 moveto
+-38.6071 040.5814 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -39.9502 translate
+0 0 moveto
+-38.7612 040.5814 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -38.9502 translate
+0 0 moveto
+-46.4758 048.4501 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -39.9502 translate
+0 0 moveto
+-46.6298 048.4501 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -38.9502 translate
+0 0 moveto
+-70.8547 072.8289 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -38.9502 translate
+0 0 moveto
+-78.6884 080.6626 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -39.9502 translate
+0 0 moveto
+-78.6884 080.6626 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -38.9502 translate
+0 0 moveto
+-84.8318 086.8060 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -39.9502 translate
+0 0 moveto
+-84.9858 086.8060 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -38.9502 translate
+0 0 moveto
+-92.7004 094.6747 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -39.9502 translate
+0 0 moveto
+-92.8545 094.6747 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 113.6210 -35.9502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+74.16 -39.00 75.47 -37.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:120:4:11) mark_URI
+gsave 074.1576 -38.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+27.93 -39.00 29.25 -37.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:118:4:11) mark_URI
+gsave 027.9330 -38.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 075.4088 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 002.3122 000.1900 000.0800 draw_round_box
+grestore
+30.65 -39.50 31.97 -38.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:118:6:13) mark_URI
+gsave 030.6496 -38.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+76.87 -39.50 78.19 -38.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:120:6:13) mark_URI
+gsave 076.8743 -38.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+33.37 -39.00 34.68 -37.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:118:10:17) mark_URI
+gsave 033.3663 -38.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 078.1254 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.1900 000.0800 draw_round_box
+grestore
+36.08 -37.00 37.08 -35.13 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:118:12:19) mark_URI
+gsave 036.0829 -35.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+79.59 -39.00 80.91 -37.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:120:10:17) mark_URI
+gsave 079.5909 -38.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 080.8421 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 002.3122 000.1900 000.0800 draw_round_box
+grestore
+gsave 039.7995 -35.9902 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.u3 glyphshow 
+grestore
+gsave 039.7345 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+82.31 -37.00 83.31 -35.13 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:120:12:19) mark_URI
+gsave 082.3075 -35.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+gsave 078.0604 -35.7602 translate
+0 0 moveto
+002.8066 000.2000 002.8066 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 075.3438 -35.7602 translate
+0 0 moveto
+002.8066 000.2000 002.8066 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 072.6272 -35.7602 translate
+0 0 moveto
+002.8066 000.2000 002.8066 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 045.9429 -35.9902 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.u3 glyphshow 
+grestore
+gsave 045.8779 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 043.6101 -40.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.0 glyphshow 
+grestore
+49.36 -37.00 50.36 -35.13 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:119:1:8) mark_URI
+gsave 049.3599 -35.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+84.71 -40.50 86.02 -39.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:120:14:21) mark_URI
+gsave 084.7080 -39.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 086.0241 -35.9902 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.u3 glyphshow 
+grestore
+gsave 085.9591 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+87.84 -37.00 88.84 -35.13 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:120:16:23) mark_URI
+gsave 087.8426 -35.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+52.50 -41.00 53.81 -39.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:119:3:10) mark_URI
+gsave 052.4954 -40.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+55.63 -37.00 56.63 -35.13 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:119:8:15) mark_URI
+gsave 055.6300 -35.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+90.85 -41.00 92.17 -39.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:120:18:25) mark_URI
+gsave 090.8514 -40.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 092.1675 -35.9902 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.u3 glyphshow 
+grestore
+gsave 092.1025 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+58.03 -39.00 59.35 -37.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:119:10:17) mark_URI
+gsave 058.0305 -38.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 089.8347 -40.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.0 glyphshow 
+grestore
+61.90 -38.00 63.22 -36.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:119:13:20) mark_URI
+gsave 061.9001 -37.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+95.58 -37.00 96.58 -35.13 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:121:1:8) mark_URI
+gsave 095.5846 -35.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+65.73 -39.00 67.04 -37.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:119:18:25) mark_URI
+gsave 065.7254 -38.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 106.9747 -37.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 066.9766 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 002.3122 001.0000 000.0800 draw_round_box
+grestore
+71.44 -39.00 72.76 -37.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:120:1:8) mark_URI
+gsave 071.4410 -38.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 072.6922 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 002.3122 000.1900 000.0800 draw_round_box
+grestore
+gsave 026.4676 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 002.3122 000.1900 000.0800 draw_round_box
+grestore
+gsave 029.1842 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 002.3122 000.1900 000.0800 draw_round_box
+grestore
+gsave 034.6174 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 002.3122 000.1900 000.0800 draw_round_box
+grestore
+98.72 -41.00 100.04 -39.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:121:3:10) mark_URI
+gsave 098.7200 -40.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 100.0362 -35.9902 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.u3 glyphshow 
+grestore
+gsave 099.9712 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+38.48 -40.50 39.80 -39.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:118:14:21) mark_URI
+gsave 038.4833 -39.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 097.5700 -40.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+44.63 -41.00 45.94 -39.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:118:18:25) mark_URI
+gsave 044.6267 -40.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+101.85 -37.00 102.85 -35.13 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:121:8:15) mark_URI
+gsave 101.8546 -35.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+gsave 053.8116 -35.9902 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.u3 glyphshow 
+grestore
+gsave 053.7466 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 051.3454 -40.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+104.26 -39.00 105.57 -37.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:121:10:17) mark_URI
+gsave 104.2551 -38.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 105.5713 -34.9902 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.u3 glyphshow 
+grestore
+gsave 105.5063 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 002.3122 001.0000 000.0800 draw_round_box
+grestore
+gsave 063.1513 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 001.3122 002.0000 000.0800 draw_round_box
+grestore
+gsave 060.7501 -37.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+108.12 -38.00 109.51 -36.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:121:13:20) mark_URI
+gsave 108.1247 -37.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s1 glyphshow 
+grestore
+gsave 109.4497 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 001.2386 002.0000 000.0800 draw_round_box
+grestore
+gsave 015.0264 -34.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /clefs.F glyphshow 
+grestore
+18.53 -37.55 20.37 -33.55 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:115:12:19) mark_URI
+gsave 018.6464 -36.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 019.5664 -35.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 021.5164 -35.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /timesig.C44 glyphshow 
+grestore
+gsave 031.8358 -35.7602 translate
+0 0 moveto
+002.8066 000.2000 002.8066 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 029.1192 -35.7602 translate
+0 0 moveto
+002.8066 000.2000 002.8066 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 026.4026 -35.7602 translate
+0 0 moveto
+002.8066 000.2000 002.8066 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+25.22 -39.00 26.53 -37.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:118:1:8) mark_URI
+gsave 025.2164 -38.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+16.22 -30.90 23.37 -27.70 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:14:1:8) mark_URI
+gsave 016.2164 -30.3725 translate
+0 0 moveto
+-01.0421 001.1721 -00.2495 002.6727 000.0433 draw_round_box
+grestore
+gsave 016.2164 -30.3725 translate
+0 0 moveto
+magfontemmentaler-18mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 017.9885 -30.8660 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /equal glyphshow grestore 1.33 0.00 rmoveto 
+ grestore
+grestore
+gsave 019.8177 -30.8660 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /one glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /two glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /zero glyphshow grestore 1.23 0.00 rmoveto 
+ grestore
+grestore
+gsave 031.9008 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.1900 000.0800 draw_round_box
+grestore
+41.62 -37.00 42.62 -35.13 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:118:16:23) mark_URI
+gsave 041.6180 -35.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+gsave 009.1463 -36.7184 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /B glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.02 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.02 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ grestore
+grestore
+gsave 059.3466 -34.9902 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.u3 glyphshow 
+grestore
+gsave 059.2816 -35.9502 translate
+0 0 moveto
+000.0650 000.0650 002.3122 001.0000 000.0800 draw_round_box
+grestore
+gsave 074.2933 -49.6075 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 089.2756 -49.6075 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 033.9998 -49.6075 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 103.5032 -49.6075 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 005.6906 -51.6075 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -50.6075 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -49.6075 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -48.6075 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -47.6075 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 113.6210 -49.6075 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 053.2973 -49.6075 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 005.6906 -52.6075 translate
+0 0 moveto
+-13.0253 014.9995 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -52.6075 translate
+0 0 moveto
+-19.7805 021.7548 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -53.6075 translate
+0 0 moveto
+-19.7805 021.7548 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -52.6075 translate
+0 0 moveto
+-25.2050 027.1793 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -53.6075 translate
+0 0 moveto
+-25.3590 027.1793 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -52.6075 translate
+0 0 moveto
+-32.1600 034.1343 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -53.6075 translate
+0 0 moveto
+-32.3140 034.1343 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -52.6075 translate
+0 0 moveto
+-36.9761 038.9504 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -53.6075 translate
+0 0 moveto
+-36.9761 038.9504 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -54.6075 translate
+0 0 moveto
+-36.9761 038.9504 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -55.6075 translate
+0 0 moveto
+-36.9761 038.9504 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -52.6075 translate
+0 0 moveto
+-40.6983 042.6726 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -53.6075 translate
+0 0 moveto
+-40.6983 042.6726 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -54.6075 translate
+0 0 moveto
+-40.8524 042.6726 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -52.6075 translate
+0 0 moveto
+-43.8796 045.8538 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -53.6075 translate
+0 0 moveto
+-43.8796 045.8538 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -54.6075 translate
+0 0 moveto
+-43.8796 045.8538 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -55.6075 translate
+0 0 moveto
+-43.8796 045.8538 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -52.6075 translate
+0 0 moveto
+-53.3958 055.3701 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -52.6075 translate
+0 0 moveto
+-73.6846 075.6589 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -52.6075 translate
+0 0 moveto
+-76.4598 078.4341 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -53.6075 translate
+0 0 moveto
+-76.4598 078.4341 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -52.6075 translate
+0 0 moveto
+-79.8579 081.8322 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -53.6075 translate
+0 0 moveto
+-79.8579 081.8322 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -52.6075 translate
+0 0 moveto
+-84.6599 086.6342 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -53.6075 translate
+0 0 moveto
+-84.6599 086.6342 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -52.6075 translate
+0 0 moveto
+-87.6260 089.4814 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -53.6075 translate
+0 0 moveto
+-87.6260 089.4814 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -52.6075 translate
+0 0 moveto
+-89.5814 091.4369 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -53.6075 translate
+0 0 moveto
+-89.5814 091.4369 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -52.6075 translate
+0 0 moveto
+-98.8691 100.9540 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -52.6075 translate
+0 0 moveto
+-103.1651 105.2501 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -53.6075 translate
+0 0 moveto
+-103.1651 105.2501 000.1000 000.1000 000.2000 draw_round_box
+grestore
+64.13 -52.16 65.45 -51.06 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:124:13:20) mark_URI
+gsave 064.1297 -51.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 060.6016 -49.4175 translate
+0 0 moveto
+002.4471 000.2000 002.4471 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 058.2445 -49.4175 translate
+0 0 moveto
+002.4471 000.2000 002.4471 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 055.8873 -49.4175 translate
+0 0 moveto
+002.4471 000.2000 002.4471 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 015.5818 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 002.3122 000.1900 000.0800 draw_round_box
+grestore
+gsave 065.3809 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 001.8122 001.0000 000.0800 draw_round_box
+grestore
+104.91 -53.16 106.30 -52.06 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:129:1:8) mark_URI
+gsave 104.9071 -52.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s1 glyphshow 
+grestore
+gsave 106.2321 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 002.7386 000.5000 000.0800 draw_round_box
+grestore
+16.69 -52.66 18.00 -51.56 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:122:4:11) mark_URI
+gsave 016.6877 -52.1075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+66.49 -52.16 67.80 -51.06 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:124:15:22) mark_URI
+gsave 066.4869 -51.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 067.7381 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 001.8122 001.0000 000.0800 draw_round_box
+grestore
+19.04 -53.16 20.36 -52.06 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:122:6:13) mark_URI
+gsave 019.0449 -52.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+21.40 -52.66 22.72 -51.56 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:122:10:17) mark_URI
+gsave 021.4020 -52.1075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+69.58 -51.66 70.90 -50.56 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:124:17:24) mark_URI
+gsave 069.5790 -51.1075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 070.8302 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 001.3122 001.0000 000.0800 draw_round_box
+grestore
+23.76 -50.66 24.76 -48.79 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:122:12:19) mark_URI
+gsave 023.7592 -49.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+gsave 068.4290 -51.1075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 027.1163 -49.6475 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.u3 glyphshow 
+grestore
+gsave 027.0513 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+71.94 -52.16 73.25 -51.06 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:124:21:28) mark_URI
+gsave 071.9362 -51.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 073.1874 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 001.8122 001.0000 000.0800 draw_round_box
+grestore
+gsave 032.5408 -49.6475 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.u3 glyphshow 
+grestore
+gsave 032.4758 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 030.2079 -54.1075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.0 glyphshow 
+grestore
+75.70 -52.66 77.01 -51.56 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:125:1:8) mark_URI
+gsave 075.6972 -52.1075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 077.4634 -52.1075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /dots.dot glyphshow 
+grestore
+35.40 -50.66 36.40 -48.79 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:123:1:8) mark_URI
+gsave 035.4036 -49.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+gsave 070.7652 -48.6075 translate
+0 0 moveto
+002.4471 000.2000 002.4471 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 067.6731 -48.6075 translate
+0 0 moveto
+003.1822 000.2000 003.1822 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 065.3159 -48.6075 translate
+0 0 moveto
+002.4471 000.2000 002.4471 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 076.9484 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 002.3122 001.0000 000.0800 draw_round_box
+grestore
+38.18 -54.66 39.50 -53.56 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:123:3:10) mark_URI
+gsave 038.1796 -54.1075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+40.95 -50.66 41.95 -48.79 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:123:8:15) mark_URI
+gsave 040.9547 -49.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+43.00 -56.16 44.31 -55.06 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:123:10:17) mark_URI
+gsave 042.9957 -55.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+46.72 -55.16 48.03 -54.06 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:123:12:19) mark_URI
+gsave 046.7179 -54.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+79.70 -53.16 81.02 -52.06 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:125:5:12) mark_URI
+gsave 079.7042 -52.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 081.0204 -49.1475 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.u3 glyphshow 
+grestore
+gsave 080.9554 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+49.90 -56.16 51.22 -55.06 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:123:17:24) mark_URI
+gsave 049.8992 -55.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+82.48 -54.16 83.80 -53.06 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:125:10:17) mark_URI
+gsave 082.4794 -53.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 083.7306 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+85.88 -54.16 87.19 -53.06 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:125:13:20) mark_URI
+gsave 085.8775 -53.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 087.1287 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 058.3095 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 002.3122 000.1900 000.0800 draw_round_box
+grestore
+90.68 -54.16 92.00 -53.06 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:128:1:8) mark_URI
+gsave 090.6795 -53.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 060.6666 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.1900 000.0800 draw_round_box
+grestore
+gsave 092.4457 -53.1075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /dots.dot glyphshow 
+grestore
+88.37 -46.76 90.56 -44.71 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:127:1:8) mark_URI
+gsave 088.4413 -46.7575 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Bold  findfont 4.869140625 output-scale div scalefont setfont
+ gsave /A glyphshow grestore 2.12 0.00 rmoveto 
+ grestore
+grestore
+gsave 063.0238 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 002.3122 000.1900 000.0800 draw_round_box
+grestore
+gsave 091.9307 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+93.65 -54.16 94.96 -53.06 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:128:5:12) mark_URI
+gsave 093.6456 -53.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 094.8967 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 020.2961 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.1900 000.0800 draw_round_box
+grestore
+gsave 020.2311 -49.4175 translate
+0 0 moveto
+002.4471 000.2000 002.4471 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 017.8739 -49.4175 translate
+0 0 moveto
+002.4471 000.2000 002.4471 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 015.5168 -49.4175 translate
+0 0 moveto
+002.4471 000.2000 002.4471 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+95.48 -54.16 96.80 -53.06 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:128:9:16) mark_URI
+gsave 095.4822 -53.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 093.5767 -50.4175 translate
+0 0 moveto
+001.3450 000.2000 001.3450 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 091.8657 -49.6075 translate
+0 0 moveto
+003.0561 000.2000 003.0561 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 096.7334 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+28.58 -50.66 29.58 -48.79 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:122:16:23) mark_URI
+gsave 028.5753 -49.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+98.88 -49.61 100.38 -48.98 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:128:12:19) mark_URI
+gsave 098.8803 -49.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.1 glyphshow 
+grestore
+gsave 044.3119 -49.6475 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.u3 glyphshow 
+grestore
+gsave 044.2469 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 005.8122 000.0000 000.0800 draw_round_box
+grestore
+54.70 -52.66 56.02 -51.56 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:124:1:8) mark_URI
+gsave 054.7011 -52.1075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+59.42 -53.16 60.73 -52.06 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:124:7:14) mark_URI
+gsave 059.4154 -52.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+109.20 -54.66 110.59 -53.56 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:129:6:13) mark_URI
+gsave 109.2031 -54.1075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s1 glyphshow 
+grestore
+gsave 110.5281 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 004.2386 000.0000 000.0800 draw_round_box
+grestore
+14.33 -52.66 15.65 -51.56 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:122:1:8) mark_URI
+gsave 014.3306 -52.1075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 022.6532 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 002.3122 000.1900 000.0800 draw_round_box
+grestore
+gsave 005.6028 -46.5234 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.0673828125 output-scale div scalefont setfont
+ gsave /five glyphshow grestore 0.96 0.00 rmoveto 
+ grestore
+grestore
+31.22 -54.66 32.54 -53.56 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:122:18:25) mark_URI
+gsave 031.2246 -54.1075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 006.4906 -48.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /clefs.F glyphshow 
+grestore
+gsave 010.1106 -50.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 011.0306 -49.1075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 037.0296 -54.1075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 047.9691 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 051.1503 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 005.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 055.9523 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 002.3122 000.1900 000.0800 draw_round_box
+grestore
+57.06 -52.66 58.37 -51.56 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:124:5:12) mark_URI
+gsave 057.0583 -52.1075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 017.9389 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 002.3122 000.1900 000.0800 draw_round_box
+grestore
+gsave 039.4958 -49.6475 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.u3 glyphshow 
+grestore
+gsave 039.4308 -49.6075 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+61.77 -52.66 63.09 -51.56 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:124:11:18) mark_URI
+gsave 061.7726 -52.1075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 045.5679 -54.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+25.80 -54.16 27.12 -53.06 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:122:14:21) mark_URI
+gsave 025.8001 -53.6075 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 060.5601 -65.5937 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 082.2706 -66.0937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /dots.dot glyphshow 
+grestore
+gsave 082.2706 -65.0937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /dots.dot glyphshow 
+grestore
+gsave 083.0206 -65.5937 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 083.5106 -65.5937 translate
+0 0 moveto
+000.0000 000.6000 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 028.3566 -65.5937 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 099.2295 -65.5937 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 005.6906 -67.5937 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -66.5937 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -65.5937 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -64.5937 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -63.5937 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 112.7210 -65.5937 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 113.2110 -65.5937 translate
+0 0 moveto
+000.0000 000.6000 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 039.6441 -65.5937 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 005.6906 -68.5937 translate
+0 0 moveto
+-08.3110 010.2853 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -69.5937 translate
+0 0 moveto
+-08.3110 010.2853 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -68.5937 translate
+0 0 moveto
+-11.5460 013.4439 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -69.5937 translate
+0 0 moveto
+-11.5460 013.4439 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -68.5937 translate
+0 0 moveto
+-13.5439 015.4418 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -69.5937 translate
+0 0 moveto
+-13.5439 015.4418 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -68.5937 translate
+0 0 moveto
+-23.8143 025.8993 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -68.5937 translate
+0 0 moveto
+-28.5841 030.6691 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -69.5937 translate
+0 0 moveto
+-28.5841 030.6691 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -68.5937 translate
+0 0 moveto
+-35.1203 037.0946 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -69.5937 translate
+0 0 moveto
+-35.1203 037.0946 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -68.5937 translate
+0 0 moveto
+-38.3553 040.2532 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -69.5937 translate
+0 0 moveto
+-38.3553 040.2532 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -68.5937 translate
+0 0 moveto
+-40.3532 042.2511 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -69.5937 translate
+0 0 moveto
+-40.3532 042.2511 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -68.5937 translate
+0 0 moveto
+-88.1563 090.1305 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -68.5937 translate
+0 0 moveto
+-100.9821 102.9564 000.1000 000.1000 000.2000 draw_round_box
+grestore
+17.57 -70.14 18.88 -69.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:130:5:12) mark_URI
+gsave 017.5656 -69.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+72.16 -68.14 73.48 -67.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:135:27:34) mark_URI
+gsave 072.1633 -67.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+19.49 -70.14 20.80 -69.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:130:9:16) mark_URI
+gsave 019.4871 -69.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 068.2958 -64.5937 translate
+0 0 moveto
+002.6168 000.2000 002.6168 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 065.7689 -64.5937 translate
+0 0 moveto
+002.6168 000.2000 002.6168 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 063.2421 -64.5937 translate
+0 0 moveto
+002.6168 000.2000 002.6168 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 020.7383 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 073.4144 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 001.8122 001.0000 000.0800 draw_round_box
+grestore
+74.69 -68.14 76.01 -67.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:135:29:36) mark_URI
+gsave 074.6901 -67.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+29.85 -69.14 31.24 -68.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:131:1:8) mark_URI
+gsave 029.8524 -68.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s1 glyphshow 
+grestore
+gsave 075.9413 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 001.8122 001.0000 000.0800 draw_round_box
+grestore
+gsave 031.1774 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 002.7386 000.5000 000.0800 draw_round_box
+grestore
+77.22 -68.14 78.53 -67.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:135:31:38) mark_URI
+gsave 077.2169 -67.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 078.4681 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 001.8122 001.0000 000.0800 draw_round_box
+grestore
+34.62 -70.64 36.01 -69.54 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:131:6:13) mark_URI
+gsave 034.6221 -70.0937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s1 glyphshow 
+grestore
+79.74 -68.14 81.06 -67.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:135:33:40) mark_URI
+gsave 079.7438 -67.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 080.9950 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 001.8122 001.0000 000.0800 draw_round_box
+grestore
+gsave 042.9061 -69.0937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /dots.dot glyphshow 
+grestore
+gsave 042.3911 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+85.42 -68.14 86.81 -67.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:135:38:45) mark_URI
+gsave 085.4164 -67.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s1 glyphshow 
+grestore
+gsave 078.4031 -64.5937 translate
+0 0 moveto
+002.6168 000.2000 002.6168 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 075.8763 -64.5937 translate
+0 0 moveto
+002.6168 000.2000 002.6168 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 073.3494 -64.5937 translate
+0 0 moveto
+002.6168 000.2000 002.6168 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 084.4306 -60.2770 translate
+0 0 moveto
+gsave 
+  /feta-alphabet13  findfont 4.427734375 output-scale div scalefont setfont
+ gsave /two glyphshow grestore 0.96 0.00 rmoveto 
+ gsave /period glyphshow grestore 0.27 0.00 rmoveto 
+ grestore
+grestore
+gsave 083.5106 -58.5137 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1600 setlinewidth 015.2189 000.0000 moveto 015.2189 000.0000 lineto stroke
+grestore
+gsave 083.5106 -58.5137 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1600 setlinewidth 015.2189 000.0000 moveto 007.6095 000.0000 lineto stroke
+grestore
+gsave 083.5106 -58.5137 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1600 setlinewidth 000.0000 000.0000 moveto 000.0000 -02.0000 lineto stroke
+grestore
+gsave 083.5106 -58.5137 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1600 setlinewidth 000.0000 000.0000 moveto 007.6095 000.0000 lineto stroke
+grestore
+gsave 086.7414 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 001.7386 001.5000 000.0800 draw_round_box
+grestore
+gsave 045.6261 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 044.3061 -66.4037 translate
+0 0 moveto
+001.3450 000.2000 001.3450 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 042.3261 -65.5937 translate
+0 0 moveto
+003.3250 000.2000 003.3250 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+50.03 -66.64 51.03 -64.77 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:132:13:20) mark_URI
+gsave 050.0339 -65.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+52.24 -66.64 53.56 -65.54 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:132:16:23) mark_URI
+gsave 052.2446 -66.0937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+54.77 -67.14 56.09 -66.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:132:20:27) mark_URI
+gsave 054.7714 -66.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+58.03 -67.64 59.35 -66.54 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:132:24:31) mark_URI
+gsave 058.0333 -67.0937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+90.44 -68.64 91.75 -67.54 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:135:41:48) mark_URI
+gsave 090.4384 -68.0937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 091.6895 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 002.3122 001.0000 000.0800 draw_round_box
+grestore
+gsave 055.9576 -63.0544 translate
+0 0 moveto
+003.3518 -00.1633 003.3518 -00.5633 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 053.4308 -62.7837 translate
+0 0 moveto
+002.6168 -00.0846 002.6168 -00.4846 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+94.18 -69.14 95.49 -68.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:135:44:51) mark_URI
+gsave 094.1759 -68.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 095.4270 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 015.5818 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+96.70 -68.64 98.02 -67.54 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:135:49:56) mark_URI
+gsave 096.7027 -68.0937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 097.9539 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 002.3122 000.1900 000.0800 draw_round_box
+grestore
+gsave 065.8339 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 001.8122 001.0000 000.0800 draw_round_box
+grestore
+gsave 068.3608 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 001.8122 001.0000 000.0800 draw_round_box
+grestore
+100.99 -67.64 102.31 -66.54 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:136:1:8) mark_URI
+gsave 100.9896 -67.0937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 095.3620 -65.5937 translate
+0 0 moveto
+002.6168 000.3998 002.6168 -00.0002 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 070.8876 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 001.8122 001.0000 000.0800 draw_round_box
+grestore
+gsave 018.8168 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 102.2407 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 001.3122 002.0000 000.0800 draw_round_box
+grestore
+23.22 -65.59 24.72 -64.97 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:130:12:19) mark_URI
+gsave 023.2246 -65.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.1 glyphshow 
+grestore
+14.33 -70.14 15.65 -69.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:130:1:8) mark_URI
+gsave 014.3306 -69.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 099.8396 -67.0937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+41.14 -70.14 42.46 -69.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:132:1:8) mark_URI
+gsave 041.1399 -69.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+44.37 -70.14 45.69 -69.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:132:5:12) mark_URI
+gsave 044.3749 -69.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 047.5476 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+104.47 -68.64 105.79 -67.54 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:136:6:13) mark_URI
+gsave 104.4748 -68.0937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 105.7260 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 002.3122 000.1900 000.0800 draw_round_box
+grestore
+gsave 053.4958 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 000.3122 002.8100 000.0800 draw_round_box
+grestore
+gsave 059.2845 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 001.3122 002.1900 000.0800 draw_round_box
+grestore
+107.00 -69.14 108.32 -68.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:136:9:16) mark_URI
+gsave 107.0017 -68.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 056.8833 -67.0937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 108.2529 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.0000 000.0800 draw_round_box
+grestore
+62.06 -68.14 63.37 -67.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:135:18:25) mark_URI
+gsave 062.0559 -67.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 063.3071 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 001.8122 001.0000 000.0800 draw_round_box
+grestore
+109.53 -68.64 110.84 -67.54 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:136:13:20) mark_URI
+gsave 109.5285 -68.0937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+64.58 -68.14 65.90 -67.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:135:21:28) mark_URI
+gsave 064.5827 -67.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+109.69 -69.94 110.69 -68.84 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:136:15:22) mark_URI
+gsave 110.1866 -68.8437 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /scripts.dmarcato glyphshow 
+grestore
+gsave 105.6610 -65.4037 translate
+0 0 moveto
+002.6168 000.0002 002.6168 -00.3998 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 110.7797 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 002.3122 001.0000 000.0800 draw_round_box
+grestore
+69.64 -68.14 70.95 -67.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:135:25:32) mark_URI
+gsave 069.6364 -67.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 004.6468 -62.5437 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.0673828125 output-scale div scalefont setfont
+ gsave /one glyphshow grestore 0.96 0.00 rmoveto 
+ gsave /one glyphshow grestore 0.96 0.00 rmoveto 
+ grestore
+grestore
+gsave 016.0968 -69.0937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /dots.dot glyphshow 
+grestore
+gsave 006.4906 -64.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /clefs.F glyphshow 
+grestore
+gsave 010.1106 -66.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 011.0306 -65.0937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 056.0226 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 000.8122 002.5394 000.0800 draw_round_box
+grestore
+gsave 061.5143 -60.3112 translate
+0 0 moveto
+gsave 
+  /feta-alphabet13  findfont 4.427734375 output-scale div scalefont setfont
+ gsave /one glyphshow grestore 0.89 0.00 rmoveto 
+ gsave /period glyphshow grestore 0.27 0.00 rmoveto 
+ grestore
+grestore
+gsave 060.5601 -58.5137 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1600 setlinewidth 022.4505 000.0000 moveto 022.4505 -02.0000 lineto stroke
+grestore
+gsave 060.5601 -58.5137 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1600 setlinewidth 022.4505 000.0000 moveto 011.2252 000.0000 lineto stroke
+grestore
+gsave 060.5601 -58.5137 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1600 setlinewidth 000.0000 000.0000 moveto 000.0000 -02.0000 lineto stroke
+grestore
+gsave 060.5601 -58.5137 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1600 setlinewidth 000.0000 000.0000 moveto 011.2252 000.0000 lineto stroke
+grestore
+67.11 -68.14 68.43 -67.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:135:23:30) mark_URI
+gsave 067.1096 -67.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 017.4968 -66.4037 translate
+0 0 moveto
+001.3450 000.2000 001.3450 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 015.5168 -65.5937 translate
+0 0 moveto
+003.3250 000.2000 003.3250 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 035.9471 -65.5937 translate
+0 0 moveto
+000.0650 000.0650 004.2386 000.0000 000.0800 draw_round_box
+grestore
+46.30 -70.14 47.61 -69.04 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/parts%20Sunshine%20of%20Our%20God.ly:132:9:16) mark_URI
+gsave 046.2964 -69.5937 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 031.4397 -163.1346 translate
+0 0 moveto
+0.03 -0.44 56.59 1.64 (http://lilypond.org/web/) mark_URI
+grestore
+gsave 031.4397 -163.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /M glyphshow grestore 2.08 0.00 rmoveto 
+ gsave /u glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.02 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /c glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /g glyphshow grestore 1.25 0.00 rmoveto 
+ gsave /r glyphshow grestore 0.98 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.16 0.00 rmoveto 
+ gsave /v glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /g glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /b glyphshow grestore 1.17 0.00 rmoveto 
+ gsave /y glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /L glyphshow grestore 1.47 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.62 0.00 rmoveto 
+ gsave /y glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /P glyphshow grestore 1.47 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /d glyphshow grestore 1.26 0.00 rmoveto 
+ grestore
+grestore
+gsave 061.6638 -163.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ grestore
+grestore
+gsave 062.2638 -163.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /two glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /period glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /eight glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /period glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /six glyphshow grestore 1.23 0.00 rmoveto 
+ grestore
+grestore
+gsave 067.6780 -163.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /emdash glyphshow grestore 2.19 0.00 rmoveto 
+ grestore
+grestore
+gsave 070.4632 -163.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /w glyphshow grestore 1.71 0.00 rmoveto 
+ gsave /w glyphshow grestore 1.71 0.00 rmoveto 
+ gsave /w glyphshow grestore 1.54 0.00 rmoveto 
+ gsave /period glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.62 0.00 rmoveto 
+ gsave /y glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /p glyphshow grestore 1.26 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /d glyphshow grestore 1.26 0.00 rmoveto 
+ gsave /period glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /r glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /g glyphshow grestore 1.20 0.00 rmoveto 
+ grestore
+grestore
+gsave 018.8620 -160.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /I glyphshow grestore 0.89 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.02 0.00 rmoveto 
+ gsave /p glyphshow grestore 1.26 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /r glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /d glyphshow grestore 1.26 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /b glyphshow grestore 1.17 0.00 rmoveto 
+ gsave /y glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /m glyphshow grestore 1.95 0.00 rmoveto 
+ gsave /u glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.02 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /c glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /b glyphshow grestore 1.17 0.00 rmoveto 
+ gsave /y glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /E glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /r glyphshow grestore 1.03 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /c glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /C glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /p glyphshow grestore 1.26 0.00 rmoveto 
+ gsave /t glyphshow grestore 0.87 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /comma glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /J glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /c glyphshow grestore 0.96 0.00 rmoveto 
+ gsave /k glyphshow grestore 1.30 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /B glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /r glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /u glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /c glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /comma glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /P glyphshow grestore 1.41 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.05 0.00 rmoveto 
+ gsave /t glyphshow grestore 0.87 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /B glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /r glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.04 0.00 rmoveto 
+ gsave /w glyphshow grestore 1.71 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /comma glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /d glyphshow grestore 1.26 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /R glyphshow grestore 1.63 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /b glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /r glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /t glyphshow grestore 0.85 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /L glyphshow grestore 1.47 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /B glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /c glyphshow grestore 0.99 0.00 rmoveto 
+ grestore
+grestore
+stroke grestore 
+showpage
+%%Trailer
+%%EOF

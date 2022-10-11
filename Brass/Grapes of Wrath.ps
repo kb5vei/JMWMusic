@@ -1,0 +1,4138 @@
+%!PS-Adobe-3.0
+%%Creator: LilyPond 2.8.6
+%%Pages: 1
+%%PageOrder: Ascend
+%%Orientation: Portrait
+%%DocumentMedia: a4 595.28 844.72 80 () ()
+%%DocumentSuppliedResources: font CenturySchL-Bold
+%%DocumentSuppliedResources: font CenturySchL-Roma
+%%DocumentSuppliedResources: font Emmentaler-18
+%%DocumentSuppliedResources: font Emmentaler-20
+%%EndComments
+
+%%BeginDefaults
+%%PageMedia: a4
+%%EndDefaults
+%%BeginProlog
+
+%%BeginFont: CenturySchL-Bold
+(C:/Program Files/LilyPond/usr/bin/../share/lilypond/current/fonts/otf/CenturySchL-Bold.otf) (r) file .loadfont
+
+%%EndFont
+
+%%BeginFont: CenturySchL-Roma
+(C:/Program Files/LilyPond/usr/bin/../share/lilypond/current/fonts/otf/CenturySchL-Roma.otf) (r) file .loadfont
+
+%%EndFont
+
+%%BeginFont: Emmentaler-18
+(C:/Program Files/LilyPond/usr/bin/../share/lilypond/current/fonts/otf/emmentaler-18.otf) (r) file .loadfont
+
+%%EndFont
+
+%%BeginFont: Emmentaler-20
+(C:/Program Files/LilyPond/usr/bin/../share/lilypond/current/fonts/otf/emmentaler-20.otf) (r) file .loadfont
+
+%%EndFont
+
+/magfontemmentaler-18mXVo { /Emmentaler-18 findfont 006.2623 output-scale div scalefont } bind def
+/magfontemmentaler-20mXVo { /Emmentaler-20 findfont 007.0292 output-scale div scalefont } bind def
+/lily-output-units 2.83464566929134 def %% millimeter
+/staff-line-thickness 0.1 def
+/line-width 108.120472440945 def
+/paper-size (a4) def
+/staff-height 4.0 def
+/output-scale 1.75729901757299 def
+/page-height 169.57842519685 def
+/page-width 119.50157480315 def
+%%BeginResource: procset (music-drawing-routines.ps) 1 0
+%!PS-Adobe-1.0: music-drawing-routines.ps
+%
+% Functions for direct and embedded PostScript
+
+% Careful with double % as comment prefix.
+% Any %%X comment is interpreted as DSC comments.
+
+% TODO: use dicts or prefixes to prevent namespace pollution.
+
+/pdfmark where
+{pop} {userdict /pdfmark /cleartomark load put} ifelse
+
+% from adobe tech note 5002. 
+/BeginEPSF { %def
+    /b4_Inc_state save def % Save state for cleanup
+    /dict_count countdictstack def % Count objects on dict stack
+    /op_count count 1 sub def % Count objects on operand stack
+    userdict begin % Push userdict on dict stack
+    /showpage { } def % Redefine showpage, { } = null proc
+    0 setgray 0 setlinecap % Prepare graphics state
+    1 setlinewidth 0 setlinejoin
+    10 setmiterlimit [ ] 0 setdash newpath
+    /languagelevel where % If level not equal to 1 then
+    {pop languagelevel % set strokeadjust and
+    1 ne % overprint to their defaults.
+      {false setstrokeadjust false setoverprint
+      } if
+    } if
+} bind def
+
+
+/EndEPSF { %def
+  count op_count sub {pop} repeat % Clean up stacks
+  countdictstack dict_count sub {end} repeat
+  b4_Inc_state restore
+} bind def 
+
+
+%<font> <encoding> <name> reencode-font
+/reencode-font
+{
+    /name exch def
+    /encoding exch def
+    dup length
+    dict begin {
+	1 index /FID ne {def} {pop
+	pop} ifelse
+    }
+    forall
+    /Encoding encoding
+    def currentdict
+    end
+    name exch definefont
+} bind def
+
+
+% llx lly urx ury URI
+/mark_URI
+{
+    /command exch def
+    /ury exch def
+    /urx exch def
+    /lly exch def
+    /llx exch def
+    [
+	/Rect [ llx lly urx ury ]
+	/Border [ 0 0 0 ]
+
+        /Action
+	    <<
+		/Subtype /URI
+		/URI command
+	    >>
+        /Subtype /Link
+    /ANN
+    pdfmark
+}
+bind def
+
+/set_tex_dimen
+{
+	cvr def
+} bind def
+
+
+
+/euclidean_length
+{
+	1 copy mul exch 1 copy mul add sqrt
+} bind def
+
+% FIXME.  translate to middle of box.
+% Nice rectangle with rounded corners
+/draw_box % breapth width depth height
+{
+%	currentdict /testing known {
+		%% real thin lines for testing
+		/blot 0.005 def
+%	}{
+%		/blot blot-diameter def
+%	} ifelse
+
+	0 setlinecap
+	blot setlinewidth
+	1 setlinejoin
+
+	blot 2 div sub /h exch def
+	blot 2 div sub /d exch def
+	blot 2 div sub /w exch def
+	blot 2 div sub /b exch def
+
+	b neg d neg moveto
+	b w add 0 rlineto
+	0 d h add rlineto
+	b w add neg 0 rlineto
+	0 d h add neg rlineto
+
+	currentdict /testing known {
+		%% outline only, for testing:
+		stroke
+	}{
+		closepath gsave stroke grestore fill
+	} ifelse
+} bind def
+
+
+/draw_round_box % breapth width depth height blot
+{
+	/blot exch def
+
+	0 setlinecap
+	blot setlinewidth
+	1 setlinejoin
+
+	blot 2 div sub /h exch def
+	blot 2 div sub /d exch def
+	blot 2 div sub /w exch def
+	blot 2 div sub /b exch def
+
+	b neg d neg moveto
+	b w add 0 rlineto
+	0 d h add rlineto
+	b w add neg 0 rlineto
+	0 d h add neg rlineto
+
+	currentdict /testing known {
+		%% outline only, for testing:
+		stroke
+	}{
+		closepath gsave stroke grestore fill
+	} ifelse
+} bind def
+
+/draw_polygon % x(n) y(n) x(n-1) y(n-1) ... x(1) y(1) n blot fill
+{
+	/fillp exch def
+	/blot exch def
+
+	0 setlinecap
+	blot setlinewidth
+	1 setlinejoin
+
+	/points exch def
+	2 copy
+	moveto
+	1 1 points { pop lineto } for
+	closepath 
+	fillp {
+		gsave stroke grestore fill
+	}{
+		stroke
+	} ifelse
+} bind def
+
+/draw_repeat_slash % width slope thick
+{
+	1 setlinecap
+	1 setlinejoin
+
+	/beamthick exch def
+	/slope exch def
+	/width exch def
+	beamthick beamthick slope div euclidean_length
+	  /xwid exch def
+	0 0 moveto
+	xwid 0  rlineto
+	width slope width mul rlineto
+	xwid neg 0 rlineto
+      %  width neg width angle sin mul neg rlineto
+	closepath fill
+} bind def
+
+% this is for drawing slurs.
+/draw_bezier_sandwich  % thickness controls
+{
+    % round ending and round beginning
+    1 setlinejoin 1 setlinecap
+	setlinewidth
+	moveto
+	curveto
+	lineto
+	curveto
+	closepath
+	gsave
+	fill
+	grestore
+	stroke
+} bind def
+
+/draw_dot % x1 y2 R
+{
+%	0 360 arc fill stroke
+	0 360 arc closepath fill stroke
+} bind def
+
+/draw_circle % R T F
+{
+	/filled exch def
+	setlinewidth
+	dup 0 moveto
+	0 exch 0 exch
+	0 360 arc closepath
+	gsave stroke grestore
+	filled { fill } if 
+} bind def
+
+
+% JUNKME. use color & circle. 
+/draw_white_dot % x1 y2 R
+{
+%	0 360 arc fill stroke
+	0 360 arc closepath % fill stroke
+gsave
+ 1 setgray fill
+grestore
+%	0 360 arc closepath % fill stroke
+  0.05 setlinewidth 0 setgray stroke
+} bind def
+
+
+% JUNKME: Use color.  
+/draw_white_text  % text scale font
+{
+  %font
+  findfont
+  %scale
+  exch scalefont setfont
+  1 setgray
+  0 0 moveto
+  %-0.05 -0.05 moveto
+  % text
+  show
+} bind def
+
+
+/draw_dashed_line % dash thickness dx dy
+{
+	1 setlinecap
+	1 setlinejoin
+	setdash
+	setlinewidth
+	0 0 moveto
+	lineto
+	stroke
+} bind def
+
+/draw_dashed_slur % dash thickness controls
+{
+	1 setlinecap
+	1 setlinejoin
+	setdash
+	setlinewidth
+	8 -2 roll
+	moveto
+	curveto
+	stroke
+} bind def
+
+
+%end music-drawing-routines.ps
+
+%%EndResource
+%%BeginResource: procset (lilyponddefs.ps) 1 0
+%!PS-Adobe-2.0: lilyponddefs.ps
+% TODO:
+%  * junk all magic, start-line/stop-line just: placebox @ x.y
+%
+% Functions for direct PostScript output
+
+% /setgray { 1 add } bind def
+
+% To let gs load fonts from builddir, do:
+% export GS_LIB=$(pwd)/mf/out:/usr/share/texmf/fonts/type1/bluesky/cm
+
+
+/set-ps-scale-to-lily-scale {
+	lily-output-units output-scale mul
+	lily-output-units output-scale mul scale
+} bind def
+
+
+/init-paper {
+	gsave
+	clippath pathbbox newpath
+	/paper-height exch def
+	/paper-width exch def pop pop pop
+	% FIXME
+	/top-margin 2 def
+	paper-width line-width sub 2 div /left-margin exch def
+	grestore
+} bind def
+
+/init-lilypond-parameters {
+	staff-line-thickness setlinewidth
+	staff-height init-paper
+} bind def
+
+
+% end lilyponddefs.ps
+
+%%EndResource
+%%EndProlog
+%%BeginSetup
+init-lilypond-parameters
+%%EndSetup
+
+%%Page: 1 1
+%%BeginPageSetup
+%%EndPageSetup
+gsave 0 paper-height translate set-ps-scale-to-lily-scale 
+gsave 005.6906 -05.0000 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ grestore
+grestore
+gsave 102.3693 -28.8894 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /W glyphshow grestore 2.12 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /m glyphshow grestore 1.95 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.02 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ grestore
+grestore
+gsave 101.3941 -25.3894 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /P glyphshow grestore 1.47 0.00 rmoveto 
+ gsave /h glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /V glyphshow grestore 1.59 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.02 0.00 rmoveto 
+ gsave /c glyphshow grestore 0.96 0.00 rmoveto 
+ gsave /h glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /r glyphshow grestore 0.99 0.00 rmoveto 
+ grestore
+grestore
+gsave 048.0503 -21.8894 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Bold  findfont 4.3369140625 output-scale div scalefont setfont
+ gsave /F glyphshow grestore 1.66 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.50 0.00 rmoveto 
+ gsave /r glyphshow grestore 1.30 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.72 0.00 rmoveto 
+ gsave /S glyphshow grestore 1.64 0.00 rmoveto 
+ gsave /P glyphshow grestore 1.88 0.00 rmoveto 
+ gsave /S glyphshow grestore 1.64 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.72 0.00 rmoveto 
+ gsave /P glyphshow grestore 1.80 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.43 0.00 rmoveto 
+ gsave /p glyphshow grestore 1.64 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.72 0.00 rmoveto 
+ gsave /B glyphshow grestore 1.91 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.50 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.71 0.00 rmoveto 
+ gsave /d glyphshow grestore 1.64 0.00 rmoveto 
+ grestore
+grestore
+gsave 045.0073 -18.3894 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Bold  findfont 6.1357421875 output-scale div scalefont setfont
+ gsave /G glyphshow grestore 2.90 0.00 rmoveto 
+ gsave /r glyphshow grestore 1.81 0.00 rmoveto 
+ gsave /a glyphshow grestore 2.12 0.00 rmoveto 
+ gsave /p glyphshow grestore 2.32 0.00 rmoveto 
+ gsave /e glyphshow grestore 2.01 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.74 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /o glyphshow grestore 2.12 0.00 rmoveto 
+ gsave /f glyphshow grestore 1.37 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /W glyphshow grestore 3.27 0.00 rmoveto 
+ gsave /r glyphshow grestore 1.81 0.00 rmoveto 
+ gsave /a glyphshow grestore 2.12 0.00 rmoveto 
+ gsave /t glyphshow grestore 1.50 0.00 rmoveto 
+ gsave /h glyphshow grestore 2.39 0.00 rmoveto 
+ grestore
+grestore
+gsave 082.8681 -39.4502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 082.8681 -63.4502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 014.2264 -49.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 014.2264 -48.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 014.2264 -47.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 014.2264 -46.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 014.2264 -45.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 082.8681 -51.4502 translate
+0 0 moveto
+000.0000 000.1900 009.9500 009.9500 000.0000 draw_round_box
+grestore
+gsave 032.4452 -63.4502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 098.7312 -39.4502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 047.4300 -39.4502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 098.7312 -63.4502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 047.4300 -51.4502 translate
+0 0 moveto
+000.0000 000.1900 009.9500 009.9500 000.0000 draw_round_box
+grestore
+gsave 098.7312 -51.4502 translate
+0 0 moveto
+000.0000 000.1900 009.9500 009.9500 000.0000 draw_round_box
+grestore
+gsave 064.5655 -63.4502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 113.6210 -39.4502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 113.6210 -63.4502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 032.4452 -39.4502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 113.6210 -51.4502 translate
+0 0 moveto
+000.0000 000.1900 009.9500 009.9500 000.0000 draw_round_box
+grestore
+gsave 047.4300 -63.4502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 064.5655 -51.4502 translate
+0 0 moveto
+000.0000 000.1900 009.9500 009.9500 000.0000 draw_round_box
+grestore
+gsave 014.2264 -57.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 014.2264 -56.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 014.2264 -55.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 014.2264 -54.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 014.2264 -53.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto -00.0500 000.0000 lineto stroke
+grestore
+gsave 032.4452 -51.4502 translate
+0 0 moveto
+000.0000 000.1900 009.9500 009.9500 000.0000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-20.1168 022.0911 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -67.4502 translate
+0 0 moveto
+-20.1168 022.0911 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-22.2197 024.1940 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -67.4502 translate
+0 0 moveto
+-22.2197 024.1940 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-24.3227 026.2969 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-27.9048 029.8791 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-30.7680 032.7422 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -67.4502 translate
+0 0 moveto
+-30.7680 032.7422 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-34.6576 036.6319 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-37.5208 039.4950 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -67.4502 translate
+0 0 moveto
+-37.5208 039.4950 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-42.8897 044.8639 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-47.0955 049.0698 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -67.4502 translate
+0 0 moveto
+-47.0955 049.0698 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-51.7931 053.7673 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-54.6562 056.6305 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -67.4502 translate
+0 0 moveto
+-54.6562 056.6305 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-60.0251 061.9994 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -67.4502 translate
+0 0 moveto
+-60.0251 061.9994 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -68.4502 translate
+0 0 moveto
+-60.0251 061.9994 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-64.2310 066.2052 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-68.4368 070.4111 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -67.4502 translate
+0 0 moveto
+-68.4368 070.4111 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -68.4502 translate
+0 0 moveto
+-68.4368 070.4111 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-72.6426 074.6169 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-78.3277 080.3020 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -67.4502 translate
+0 0 moveto
+-78.3277 080.3020 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-81.3138 083.2881 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -67.4502 translate
+0 0 moveto
+-81.3138 083.2881 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -68.4502 translate
+0 0 moveto
+-81.3138 083.2881 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -69.4502 translate
+0 0 moveto
+-81.3138 083.2881 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-84.2999 086.2741 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -67.4502 translate
+0 0 moveto
+-84.2999 086.2741 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-86.4028 088.3771 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -67.4502 translate
+0 0 moveto
+-86.4028 088.3771 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-88.5057 090.4800 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -67.4502 translate
+0 0 moveto
+-88.5057 090.4800 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-90.6086 092.5829 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-94.1908 096.1651 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-97.0539 099.0282 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -67.4502 translate
+0 0 moveto
+-97.0539 099.0282 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-100.9436 102.9179 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -66.4502 translate
+0 0 moveto
+-103.8068 105.7810 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -67.4502 translate
+0 0 moveto
+-103.8068 105.7810 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -36.4502 translate
+0 0 moveto
+-32.5547 034.5290 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -36.4502 translate
+0 0 moveto
+-49.4443 051.4186 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -36.4502 translate
+0 0 moveto
+-51.7931 053.7673 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -35.4502 translate
+0 0 moveto
+-51.7931 053.7673 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -36.4502 translate
+0 0 moveto
+-56.4430 058.4172 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -35.4502 translate
+0 0 moveto
+-56.4430 058.4172 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -36.4502 translate
+0 0 moveto
+-60.0251 061.9994 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -35.4502 translate
+0 0 moveto
+-60.0251 061.9994 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -36.4502 translate
+0 0 moveto
+-62.1280 064.1023 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -35.4502 translate
+0 0 moveto
+-62.1280 064.1023 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -36.4502 translate
+0 0 moveto
+-64.2310 066.2052 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -36.4502 translate
+0 0 moveto
+-66.3339 068.3081 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -36.4502 translate
+0 0 moveto
+-68.4368 070.4111 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -36.4502 translate
+0 0 moveto
+-70.5397 072.5140 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -36.4502 translate
+0 0 moveto
+-98.8407 100.8150 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 014.2264 -65.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 014.2264 -64.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 014.2264 -63.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 014.2264 -62.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 014.2264 -61.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 064.5655 -39.4502 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 014.2264 -41.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 014.2264 -40.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 014.2264 -39.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 014.2264 -38.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+gsave 014.2264 -37.4502 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 099.5346 000.0000 lineto stroke
+grestore
+76.56 -37.00 77.88 -35.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:31:19:26) mark_URI
+gsave 076.5593 -36.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 076.6243 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 000.3967 002.8122 000.0800 draw_round_box
+grestore
+78.66 -37.50 79.98 -36.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:31:21:28) mark_URI
+gsave 078.6622 -36.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+33.92 -38.00 35.24 -36.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:29:1:8) mark_URI
+gsave 033.9244 -37.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+78.66 -67.00 79.98 -65.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:74:15:22) mark_URI
+gsave 078.6622 -66.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+33.92 -67.00 35.24 -65.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:72:1:8) mark_URI
+gsave 033.9244 -66.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 078.7272 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 000.6033 002.3122 000.0800 draw_round_box
+grestore
+gsave 033.9894 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 001.5000 001.8122 000.0800 draw_round_box
+grestore
+gsave 079.9134 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+26.14 -68.50 27.45 -67.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:71:14:21) mark_URI
+gsave 026.1364 -67.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+80.77 -38.00 82.08 -36.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:31:23:30) mark_URI
+gsave 080.7652 -37.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+17.14 -34.40 24.29 -31.20 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:15:1:8) mark_URI
+gsave 017.1364 -33.8725 translate
+0 0 moveto
+-01.0421 001.1721 -00.2495 002.6727 000.0433 draw_round_box
+grestore
+gsave 017.1364 -33.8725 translate
+0 0 moveto
+magfontemmentaler-18mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 018.9085 -34.3660 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /equal glyphshow grestore 1.33 0.00 rmoveto 
+ grestore
+grestore
+gsave 020.7377 -34.3660 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /one glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /two glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /zero glyphshow grestore 1.23 0.00 rmoveto 
+ grestore
+grestore
+gsave 080.8302 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 000.8100 001.8122 000.0800 draw_round_box
+grestore
+36.79 -40.50 37.79 -38.63 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:29:6:13) mark_URI
+gsave 036.7876 -39.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+gsave 062.5926 -39.4102 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.d3 glyphshow 
+grestore
+gsave 062.5276 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 000.0000 003.8122 000.0800 draw_round_box
+grestore
+84.35 -38.50 85.66 -37.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:32:1:8) mark_URI
+gsave 084.3473 -37.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 078.6622 -40.0535 translate
+0 0 moveto
+002.1929 -00.0194 002.1929 -00.4194 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 076.5593 -39.8469 translate
+0 0 moveto
+002.1929 -00.0194 002.1929 -00.4194 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 074.4564 -39.6402 translate
+0 0 moveto
+002.1929 -00.0194 002.1929 -00.4194 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+84.35 -68.50 85.66 -67.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:75:1:8) mark_URI
+gsave 084.3473 -67.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 038.0387 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 084.4123 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 002.0000 001.3122 000.0800 draw_round_box
+grestore
+gsave 038.7043 -39.9102 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.d3 glyphshow 
+grestore
+gsave 038.6393 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 000.5000 002.8122 000.0800 draw_round_box
+grestore
+40.68 -67.00 41.99 -65.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:72:10:17) mark_URI
+gsave 040.6772 -66.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 085.5985 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+43.54 -40.50 44.54 -38.63 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:29:17:24) mark_URI
+gsave 043.5404 -39.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+gsave 044.7916 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 045.4571 -42.4102 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.d3 glyphshow 
+grestore
+gsave 045.3921 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 003.0000 000.3122 000.0800 draw_round_box
+grestore
+28.24 -39.00 29.56 -37.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:28:19:26) mark_URI
+gsave 028.2393 -38.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+48.91 -38.00 50.23 -36.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:30:1:8) mark_URI
+gsave 048.9093 -37.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 026.2014 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 002.8100 000.3122 000.0800 draw_round_box
+grestore
+gsave 050.1604 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+87.33 -37.50 88.65 -36.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:32:4:11) mark_URI
+gsave 087.3334 -36.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+87.33 -70.00 88.65 -68.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:75:5:12) mark_URI
+gsave 087.3334 -69.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 087.3984 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 001.0000 002.3122 000.0800 draw_round_box
+grestore
+gsave 088.5846 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 005.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 051.0772 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 001.0681 001.3122 000.0800 draw_round_box
+grestore
+53.12 -68.50 54.43 -67.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:73:6:13) mark_URI
+gsave 053.1151 -67.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+90.32 -39.50 91.64 -38.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:32:7:14) mark_URI
+gsave 090.3195 -38.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+90.32 -68.50 91.64 -67.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:75:7:14) mark_URI
+gsave 090.3195 -67.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 090.3845 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 002.8100 000.3122 000.0800 draw_round_box
+grestore
+55.46 -37.00 56.78 -35.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:30:11:18) mark_URI
+gsave 055.4639 -36.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 091.5707 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+57.81 -36.00 59.13 -34.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:30:13:20) mark_URI
+gsave 057.8127 -35.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 053.1151 -40.3964 translate
+0 0 moveto
+002.4388 000.3437 002.4388 -00.0563 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 051.0122 -40.5183 translate
+0 0 moveto
+002.1929 000.3295 002.1929 -00.0705 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 048.9093 -40.6402 translate
+0 0 moveto
+002.1929 000.3295 002.1929 -00.0705 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+92.42 -39.50 93.74 -38.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:32:13:20) mark_URI
+gsave 092.4224 -38.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+92.42 -68.50 93.74 -67.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:75:12:19) mark_URI
+gsave 092.4224 -67.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 092.4874 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 002.6033 000.3122 000.0800 draw_round_box
+grestore
+60.68 -40.50 61.68 -38.63 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:30:18:25) mark_URI
+gsave 060.6758 -39.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+gsave 061.9270 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 093.6736 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+109.83 -68.50 111.14 -67.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:76:14:21) mark_URI
+gsave 109.8264 -67.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+94.53 -39.00 95.84 -37.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:32:17:24) mark_URI
+gsave 094.5253 -38.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+94.53 -68.00 95.84 -66.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:75:16:23) mark_URI
+gsave 094.5253 -67.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 094.5903 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 002.3967 000.8122 000.0800 draw_round_box
+grestore
+66.04 -35.50 67.36 -34.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:31:1:8) mark_URI
+gsave 066.0447 -34.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 095.7765 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 067.2959 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+96.63 -38.50 97.94 -37.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:32:19:26) mark_URI
+gsave 096.6282 -37.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+96.63 -67.50 97.94 -66.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:75:18:25) mark_URI
+gsave 096.6282 -66.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 096.6932 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 002.1900 001.3122 000.0800 draw_round_box
+grestore
+gsave 097.8794 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 003.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 068.2126 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 000.0633 003.8122 000.0800 draw_round_box
+grestore
+70.25 -67.00 71.57 -65.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:74:5:12) mark_URI
+gsave 070.2506 -66.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+100.21 -38.00 101.53 -36.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:33:1:8) mark_URI
+gsave 100.2104 -37.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 094.5253 -41.8469 translate
+0 0 moveto
+002.1929 000.4194 002.1929 000.0194 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 092.4224 -42.0535 translate
+0 0 moveto
+002.1929 000.4194 002.1929 000.0194 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 090.3195 -42.2602 translate
+0 0 moveto
+002.1929 000.4194 002.1929 000.0194 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+100.21 -67.00 101.53 -65.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:76:1:8) mark_URI
+gsave 100.2104 -66.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 095.7115 -63.4502 translate
+0 0 moveto
+002.1929 000.2000 002.1929 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 093.6086 -63.4502 translate
+0 0 moveto
+002.1929 000.2000 002.1929 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 091.5057 -63.4502 translate
+0 0 moveto
+002.1929 000.2000 002.1929 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+72.35 -37.00 73.67 -35.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:31:12:19) mark_URI
+gsave 072.3535 -36.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 100.2754 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 001.5000 001.8122 000.0800 draw_round_box
+grestore
+74.46 -36.50 75.77 -35.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:31:15:22) mark_URI
+gsave 074.4564 -35.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 070.2506 -39.5769 translate
+0 0 moveto
+002.1929 000.1328 002.1929 -00.2672 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 068.1476 -39.5135 translate
+0 0 moveto
+002.1929 000.1328 002.1929 -00.2672 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 066.0447 -39.4502 translate
+0 0 moveto
+002.1929 000.1328 002.1929 -00.2672 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+28.24 -68.00 29.56 -66.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:71:19:26) mark_URI
+gsave 028.2393 -67.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 030.4073 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 002.1900 001.3122 000.0800 draw_round_box
+grestore
+gsave 031.5934 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 003.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 101.4616 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 028.2393 -41.9502 translate
+0 0 moveto
+002.1929 000.5292 002.1929 000.1292 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 026.1364 -42.2602 translate
+0 0 moveto
+002.1929 000.5292 002.1929 000.1292 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 028.3043 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 002.5000 000.8122 000.0800 draw_round_box
+grestore
+gsave 035.1756 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+62.46 -36.00 63.78 -34.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:30:21:28) mark_URI
+gsave 062.4626 -35.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+38.57 -37.00 39.89 -35.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:29:9:16) mark_URI
+gsave 038.5743 -36.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 040.7422 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 003.0000 000.3122 000.0800 draw_round_box
+grestore
+gsave 041.9284 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+103.07 -40.50 104.07 -38.63 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:33:6:13) mark_URI
+gsave 103.0735 -39.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+103.07 -68.50 104.39 -67.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:76:6:13) mark_URI
+gsave 103.0735 -67.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+45.33 -39.50 46.64 -38.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:29:20:27) mark_URI
+gsave 045.3271 -38.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+48.91 -67.00 50.23 -65.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:73:1:8) mark_URI
+gsave 048.9093 -66.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 104.3247 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+104.86 -37.00 106.18 -35.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:33:9:16) mark_URI
+gsave 104.8603 -36.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+51.01 -38.50 52.33 -37.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:30:5:12) mark_URI
+gsave 051.0122 -37.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 104.9903 -39.9102 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.d3 glyphshow 
+grestore
+gsave 104.9253 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 000.5000 002.8122 000.0800 draw_round_box
+grestore
+gsave 053.1801 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 000.9462 001.8122 000.0800 draw_round_box
+grestore
+gsave 054.3663 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+106.96 -39.50 108.28 -38.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:33:12:19) mark_URI
+gsave 106.9632 -38.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+57.81 -67.00 59.13 -65.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:73:10:17) mark_URI
+gsave 057.8127 -66.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+106.96 -67.00 108.28 -65.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:76:10:17) mark_URI
+gsave 106.9632 -66.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 107.0282 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 003.0000 000.3122 000.0800 draw_round_box
+grestore
+60.68 -68.50 61.99 -67.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:73:14:21) mark_URI
+gsave 060.6758 -67.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 108.2144 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 111.0775 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+66.04 -69.00 67.36 -67.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:74:1:8) mark_URI
+gsave 066.0447 -68.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+111.61 -39.50 112.93 -38.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:33:21:28) mark_URI
+gsave 111.6131 -38.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 111.7431 -42.4102 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.d3 glyphshow 
+grestore
+gsave 111.6781 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 003.0000 000.3122 000.0800 draw_round_box
+grestore
+68.15 -36.00 69.46 -34.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:31:4:11) mark_URI
+gsave 068.1476 -35.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 015.0264 -40.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /clefs.G glyphshow 
+grestore
+gsave 070.3156 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 000.1267 003.3122 000.0800 draw_round_box
+grestore
+18.53 -40.05 19.45 -37.55 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:27:20:20) mark_URI
+gsave 018.6464 -39.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 071.5017 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 022.4364 -39.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /timesig.C44 glyphshow 
+grestore
+gsave 015.0264 -48.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /clefs.G glyphshow 
+grestore
+74.46 -69.00 75.77 -67.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:74:10:17) mark_URI
+gsave 074.4564 -68.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 022.4364 -47.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /timesig.C44 glyphshow 
+grestore
+gsave 015.0264 -54.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /clefs.F glyphshow 
+grestore
+18.53 -57.55 21.29 -53.05 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:60:19:19) mark_URI
+gsave 018.6464 -56.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 019.5664 -54.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 020.4864 -56.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 022.4364 -55.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /timesig.C44 glyphshow 
+grestore
+gsave 015.0264 -62.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /clefs.F glyphshow 
+grestore
+26.14 -39.50 27.45 -38.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:28:14:21) mark_URI
+gsave 026.1364 -38.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+18.53 -65.55 21.29 -61.05 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:70:12:19) mark_URI
+gsave 018.6464 -64.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 019.5664 -62.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 020.4864 -64.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 022.4364 -63.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /timesig.C44 glyphshow 
+grestore
+36.79 -68.50 38.10 -67.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:72:6:13) mark_URI
+gsave 036.7876 -67.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+43.54 -68.50 44.86 -67.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:72:14:21) mark_URI
+gsave 043.5404 -67.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 055.5289 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 000.8100 002.8122 000.0800 draw_round_box
+grestore
+gsave 057.8777 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 000.0000 003.8122 000.0800 draw_round_box
+grestore
+gsave 027.3876 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 072.4185 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 000.1900 002.8122 000.0800 draw_round_box
+grestore
+gsave 074.5214 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 000.1900 003.3122 000.0800 draw_round_box
+grestore
+gsave 029.4255 -63.4502 translate
+0 0 moveto
+002.1929 000.2000 002.1929 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 027.3226 -63.4502 translate
+0 0 moveto
+002.1929 000.2000 002.1929 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+40.68 -39.50 41.99 -38.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:29:11:18) mark_URI
+gsave 040.6772 -38.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 048.9743 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 001.1900 001.8122 000.0800 draw_round_box
+grestore
+gsave 029.4905 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+53.12 -38.00 54.43 -36.90 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:30:7:14) mark_URI
+gsave 053.1151 -37.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 012.9164 -37.1752 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /brackettips.up glyphshow 
+grestore
+gsave 012.9164 -65.7252 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /brackettips.down glyphshow 
+grestore
+gsave 012.9164 -51.4502 translate
+0 0 moveto
+000.0000 000.4500 014.0950 014.0950 000.0000 draw_round_box
+grestore
+gsave 075.7076 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 014.1664 -51.4502 translate
+0 0 moveto
+000.0000 000.1600 014.0500 014.0500 000.1000 draw_round_box
+grestore
+gsave 006.2438 -48.2526 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /E glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /b glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /T glyphshow grestore 1.49 0.00 rmoveto 
+ gsave /C glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ grestore
+grestore
+gsave 059.0638 -63.4502 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 007.8363 -64.2184 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /B glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.02 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.02 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ grestore
+grestore
+gsave 066.1097 -39.4502 translate
+0 0 moveto
+000.0650 000.0650 000.0000 004.3122 000.0800 draw_round_box
+grestore
+70.25 -36.50 71.57 -35.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:31:8:15) mark_URI
+gsave 070.2506 -35.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 007.3583 -56.2355 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /C glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /B glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /C glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ grestore
+grestore
+30.34 -38.50 31.66 -37.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:28:21:28) mark_URI
+gsave 030.3423 -37.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+109.83 -40.50 110.83 -38.63 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:33:18:25) mark_URI
+gsave 109.8264 -39.4502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+gsave 006.2438 -40.2526 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /B glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /b glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /T glyphshow grestore 1.49 0.00 rmoveto 
+ gsave /C glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ grestore
+grestore
+30.34 -67.50 31.66 -66.40 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:71:21:28) mark_URI
+gsave 030.3423 -66.9502 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 063.2133 -86.3264 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 063.2133 -82.3264 translate
+0 0 moveto
+000.0000 000.1900 001.9500 001.9500 000.0000 draw_round_box
+grestore
+gsave 005.6906 -80.3264 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 095.0601 000.0000 lineto stroke
+grestore
+gsave 005.6906 -79.3264 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 095.0601 000.0000 lineto stroke
+grestore
+gsave 005.6906 -78.3264 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 095.0601 000.0000 lineto stroke
+grestore
+gsave 005.6906 -77.3264 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 095.0601 000.0000 lineto stroke
+grestore
+gsave 005.6906 -76.3264 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 095.0601 000.0000 lineto stroke
+grestore
+gsave 081.8601 -78.3264 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 029.4828 -86.3264 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 081.8601 -86.3264 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 046.9709 -78.3264 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 081.8601 -82.3264 translate
+0 0 moveto
+000.0000 000.1900 001.9500 001.9500 000.0000 draw_round_box
+grestore
+gsave 046.9709 -82.3264 translate
+0 0 moveto
+000.0000 000.1900 001.9500 001.9500 000.0000 draw_round_box
+grestore
+gsave 099.7107 -78.3264 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 100.2007 -78.3264 translate
+0 0 moveto
+000.0000 000.6000 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 005.6906 -75.3264 translate
+0 0 moveto
+-14.6713 016.6455 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -75.3264 translate
+0 0 moveto
+-16.9431 018.9173 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -74.3264 translate
+0 0 moveto
+-16.9431 018.9173 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -75.3264 translate
+0 0 moveto
+-21.4189 023.3932 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -74.3264 translate
+0 0 moveto
+-21.4189 023.3932 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -75.3264 translate
+0 0 moveto
+-24.8947 026.8540 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -74.3264 translate
+0 0 moveto
+-24.8947 026.8540 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -75.3264 translate
+0 0 moveto
+-26.9540 028.8983 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -74.3264 translate
+0 0 moveto
+-26.9540 028.8983 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -73.3264 translate
+0 0 moveto
+-26.9540 028.8983 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -75.3264 translate
+0 0 moveto
+-28.9983 030.9075 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -74.3264 translate
+0 0 moveto
+-28.9983 030.9075 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -73.3264 translate
+0 0 moveto
+-28.9983 030.9075 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -75.3264 translate
+0 0 moveto
+-31.0075 032.9168 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -75.3264 translate
+0 0 moveto
+-33.0168 034.9610 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -75.3264 translate
+0 0 moveto
+-35.0610 037.0053 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -75.3264 translate
+0 0 moveto
+-37.1053 039.0646 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -74.3264 translate
+0 0 moveto
+-37.1053 039.0646 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 099.7107 -86.3264 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 100.2007 -86.3264 translate
+0 0 moveto
+000.0000 000.6000 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 029.4828 -82.3264 translate
+0 0 moveto
+000.0000 000.1900 001.9500 001.9500 000.0000 draw_round_box
+grestore
+gsave 099.7107 -82.3264 translate
+0 0 moveto
+000.0000 000.1900 001.9500 001.9500 000.0000 draw_round_box
+grestore
+gsave 100.2007 -82.3264 translate
+0 0 moveto
+000.0000 000.6000 001.9500 001.9500 000.0000 draw_round_box
+grestore
+gsave 063.2133 -78.3264 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 113.6210 -86.3264 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 046.9709 -86.3264 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-08.3110 010.2853 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-12.3995 014.3738 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -90.3264 translate
+0 0 moveto
+-12.3995 014.3738 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-16.9431 018.9173 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-19.6909 021.6651 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -90.3264 translate
+0 0 moveto
+-19.6909 021.6651 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-24.8947 026.8690 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -90.3264 translate
+0 0 moveto
+-24.8947 026.8690 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -91.3264 translate
+0 0 moveto
+-24.8947 026.8690 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-28.9833 030.9575 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -90.3264 translate
+0 0 moveto
+-28.9833 030.9575 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -91.3264 translate
+0 0 moveto
+-28.9833 030.9575 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-33.0018 034.9760 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-37.0903 039.0646 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-42.3828 044.3571 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -90.3264 translate
+0 0 moveto
+-42.3828 044.3571 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-46.4713 048.4456 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -90.3264 translate
+0 0 moveto
+-46.4713 048.4456 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-50.5414 052.6264 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-58.6253 060.5996 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -90.3264 translate
+0 0 moveto
+-58.6253 060.5996 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -91.3264 translate
+0 0 moveto
+-58.6253 060.5996 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-62.7138 064.6881 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -90.3264 translate
+0 0 moveto
+-62.7138 064.6881 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -91.3264 translate
+0 0 moveto
+-62.7138 064.6881 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-66.5748 068.5491 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-71.7520 073.7262 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-77.2720 079.2463 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -90.3264 translate
+0 0 moveto
+-77.2720 079.2463 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-81.3606 083.3348 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -90.3264 translate
+0 0 moveto
+-81.3606 083.3348 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-85.2865 087.2608 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-89.6026 091.5768 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-96.0227 097.9969 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -90.3264 translate
+0 0 moveto
+-96.0227 097.9969 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -91.3264 translate
+0 0 moveto
+-96.0227 097.9969 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-98.8842 100.8585 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -90.3264 translate
+0 0 moveto
+-98.8842 100.8585 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -91.3264 translate
+0 0 moveto
+-98.8842 100.8585 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-101.9733 103.9476 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -89.3264 translate
+0 0 moveto
+-104.8349 106.8091 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 029.4828 -78.3264 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 005.6906 -88.3264 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -87.3264 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -86.3264 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -85.3264 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -84.3264 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 109.2441 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 065.8961 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 112.1056 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+61.17 -78.38 62.49 -77.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:36:19:26) mark_URI
+gsave 061.1691 -77.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+14.33 -76.88 15.65 -75.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:34:1:8) mark_URI
+gsave 014.3306 -76.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 014.3956 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 001.1900 001.8122 000.0800 draw_round_box
+grestore
+gsave 015.5818 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 016.4398 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 001.0679 001.3122 000.0800 draw_round_box
+grestore
+18.42 -91.38 19.74 -90.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:77:6:13) mark_URI
+gsave 018.4191 -90.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+66.69 -78.38 68.01 -77.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:39:3:10) mark_URI
+gsave 066.6892 -77.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+20.69 -75.88 22.01 -74.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:34:11:18) mark_URI
+gsave 020.6909 -75.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 066.7542 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 002.9415 000.3122 000.0800 draw_round_box
+grestore
+22.96 -74.88 24.28 -73.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:34:13:20) mark_URI
+gsave 022.9626 -74.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 018.4191 -79.2722 translate
+0 0 moveto
+002.3618 000.3435 002.3618 -00.0565 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 016.3748 -79.3943 translate
+0 0 moveto
+002.1343 000.3299 002.1343 -00.0701 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 014.3306 -79.5164 translate
+0 0 moveto
+002.1343 000.3299 002.1343 -00.0701 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+68.73 -77.88 70.05 -76.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:39:7:14) mark_URI
+gsave 068.7334 -77.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+68.73 -91.88 70.05 -90.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:82:7:14) mark_URI
+gsave 068.7334 -91.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 068.7984 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 003.0731 000.8122 000.0800 draw_round_box
+grestore
+25.71 -79.38 26.71 -77.51 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:34:18:25) mark_URI
+gsave 025.7104 -78.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+gsave 069.9846 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 026.9616 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 027.5685 -78.2864 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.d3 glyphshow 
+grestore
+gsave 027.5035 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.0000 003.8122 000.0800 draw_round_box
+grestore
+30.91 -74.38 32.23 -73.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:35:1:8) mark_URI
+gsave 030.9143 -73.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+72.59 -78.38 73.91 -77.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:39:13:20) mark_URI
+gsave 072.5944 -77.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+72.59 -82.09 76.22 -80.57 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:39:17:24) mark_URI
+gsave 074.6387 -80.8087 translate
+0 0 moveto
+001.5427 -00.0263 001.5427 -00.4263 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 074.6387 -81.6187 translate
+0 0 moveto
+001.5427 -00.0263 001.5427 -00.4263 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 072.5944 -81.3264 translate
+0 0 moveto
+002.1343 -00.1109 002.1343 -00.5109 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+72.59 -89.88 73.91 -88.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:82:11:18) mark_URI
+gsave 072.5944 -89.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 068.7334 -81.3995 translate
+0 0 moveto
+001.9067 000.0747 001.9067 -00.3253 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 066.6892 -81.2680 translate
+0 0 moveto
+002.1343 000.0601 002.1343 -00.3399 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 064.6449 -81.1364 translate
+0 0 moveto
+002.1343 000.0601 002.1343 -00.3399 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 072.6594 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 003.0000 000.3122 000.0800 draw_round_box
+grestore
+gsave 032.1655 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 073.8456 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+74.64 -78.38 75.95 -77.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:39:19:26) mark_URI
+gsave 074.6387 -77.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 033.0236 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.0000 004.8122 000.0800 draw_round_box
+grestore
+gsave 074.7037 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 003.2923 000.3122 000.0800 draw_round_box
+grestore
+35.00 -91.88 36.32 -90.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:78:5:12) mark_URI
+gsave 035.0029 -91.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+76.09 -79.38 77.41 -78.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:39:25:32) mark_URI
+gsave 076.0914 -78.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 076.1564 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 003.5000 -00.6878 000.0800 draw_round_box
+grestore
+36.98 -75.38 38.29 -74.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:35:9:16) mark_URI
+gsave 036.9771 -74.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+39.02 -75.88 40.34 -74.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:35:13:20) mark_URI
+gsave 039.0214 -75.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+77.77 -79.38 79.09 -78.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:39:29:36) mark_URI
+gsave 077.7716 -78.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 035.0029 -78.3264 translate
+0 0 moveto
+002.0643 000.2000 002.0643 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 032.9586 -78.3264 translate
+0 0 moveto
+002.1343 000.2000 002.1343 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 030.9143 -78.3264 translate
+0 0 moveto
+002.1343 000.2000 002.1343 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+77.77 -89.88 79.09 -88.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:82:16:23) mark_URI
+gsave 077.7716 -89.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 079.0227 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.3122 002.8100 000.0800 draw_round_box
+grestore
+41.07 -75.38 42.38 -74.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:35:15:22) mark_URI
+gsave 041.0656 -74.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 079.0227 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+43.11 -74.88 44.43 -73.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:35:19:26) mark_URI
+gsave 043.1099 -74.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 043.1749 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.6193 003.8122 000.0800 draw_round_box
+grestore
+79.82 -79.38 81.13 -78.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:39:32:39) mark_URI
+gsave 079.8158 -78.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 044.3611 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 081.0670 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.3122 002.8100 000.0800 draw_round_box
+grestore
+gsave 044.9916 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.8100 001.8122 000.0800 draw_round_box
+grestore
+48.40 -76.38 49.72 -75.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:36:1:8) mark_URI
+gsave 048.4024 -75.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+83.29 -79.88 84.61 -78.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:40:1:8) mark_URI
+gsave 083.2916 -79.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+48.40 -91.38 49.72 -90.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:79:1:8) mark_URI
+gsave 048.4024 -90.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 078.9577 -75.5164 translate
+0 0 moveto
+002.1343 000.2000 002.1343 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 048.4674 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.1900 002.3122 000.0800 draw_round_box
+grestore
+83.29 -91.38 84.61 -90.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:83:1:8) mark_URI
+gsave 083.2916 -90.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 084.5428 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.8122 002.8100 000.0800 draw_round_box
+grestore
+gsave 084.5428 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+50.45 -76.38 51.76 -75.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:36:3:10) mark_URI
+gsave 050.4467 -75.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+52.49 -76.88 53.81 -75.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:36:5:12) mark_URI
+gsave 052.4909 -76.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 052.5559 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.6033 001.8122 000.0800 draw_round_box
+grestore
+gsave 053.7421 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+64.64 -77.88 65.96 -76.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:39:1:8) mark_URI
+gsave 064.6449 -77.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 054.6002 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.8100 001.3122 000.0800 draw_round_box
+grestore
+56.58 -89.88 57.97 -88.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:79:9:16) mark_URI
+gsave 056.5795 -89.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s1 glyphshow 
+grestore
+gsave 056.6445 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 001.5000 001.8122 000.0800 draw_round_box
+grestore
+gsave 057.9044 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 002.7386 000.5000 000.0800 draw_round_box
+grestore
+85.34 -79.38 86.65 -78.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:40:3:10) mark_URI
+gsave 085.3359 -78.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 086.5871 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.3122 002.8100 000.0800 draw_round_box
+grestore
+gsave 064.7099 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 002.8100 000.8122 000.0800 draw_round_box
+grestore
+87.38 -78.88 88.70 -77.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:40:5:12) mark_URI
+gsave 087.3802 -78.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+87.38 -91.38 88.70 -90.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:83:5:12) mark_URI
+gsave 087.3802 -90.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+107.99 -89.88 109.31 -88.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:84:11:18) mark_URI
+gsave 107.9929 -89.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 088.6313 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 -00.1878 002.8100 000.0800 draw_round_box
+grestore
+14.33 -89.88 15.65 -88.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:77:1:8) mark_URI
+gsave 014.3306 -89.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 088.6313 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+18.42 -76.88 19.74 -75.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:34:7:14) mark_URI
+gsave 018.4191 -76.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+89.20 -79.88 90.51 -78.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:40:9:16) mark_URI
+gsave 089.1969 -79.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 020.7559 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.8100 002.8122 000.0800 draw_round_box
+grestore
+gsave 090.4481 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.8122 002.8100 000.0800 draw_round_box
+grestore
+gsave 023.0276 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.0000 003.8122 000.0800 draw_round_box
+grestore
+gsave 024.2138 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+91.31 -79.38 92.62 -78.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:40:11:18) mark_URI
+gsave 091.3061 -78.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+91.31 -89.88 92.62 -88.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:83:9:16) mark_URI
+gsave 091.3061 -89.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+27.44 -74.88 28.75 -73.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:34:21:28) mark_URI
+gsave 027.4385 -74.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 088.5663 -75.5164 translate
+0 0 moveto
+001.9067 000.2000 001.9067 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 086.5221 -75.5164 translate
+0 0 moveto
+002.1343 000.2000 002.1343 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 084.4778 -75.5164 translate
+0 0 moveto
+002.1343 000.2000 002.1343 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 091.3711 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 002.8100 -00.6878 000.0800 draw_round_box
+grestore
+30.91 -91.88 32.23 -90.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:78:1:8) mark_URI
+gsave 030.9143 -91.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 092.5573 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+62.35 -75.48 64.46 -72.79 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:80:1:8) mark_URI
+gsave 062.6351 -75.4764 translate
+0 0 moveto
+000.2837 001.8201 0 000.1000 000.0000 draw_round_box
+grestore
+gsave 062.6351 -72.8921 translate
+0 0 moveto
+000.2837 001.8201 0 000.1000 000.0000 draw_round_box
+grestore
+gsave 062.3514 -75.0903 translate
+0 0 moveto
+0 000.1000 000.2861 002.1982 000.0000 draw_round_box
+grestore
+gsave 064.3553 -75.0903 translate
+0 0 moveto
+0 000.1000 000.2861 002.1982 000.0000 draw_round_box
+grestore
+gsave 062.6351 -75.0903 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Bold  findfont 4.869140625 output-scale div scalefont setfont
+ gsave /nine glyphshow grestore 1.60 0.00 rmoveto 
+ grestore
+grestore
+32.96 -73.88 34.27 -72.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:35:3:10) mark_URI
+gsave 032.9586 -73.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+93.58 -78.38 94.89 -77.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:40:13:20) mark_URI
+gsave 093.5779 -77.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 035.0679 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.0000 005.3122 000.0800 draw_round_box
+grestore
+gsave 093.6429 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 002.5885 000.3122 000.0800 draw_round_box
+grestore
+gsave 036.2540 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+39.02 -89.88 40.34 -88.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:78:9:16) mark_URI
+gsave 039.0214 -89.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+95.62 -78.38 96.94 -77.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:40:19:26) mark_URI
+gsave 095.6222 -77.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+95.62 -89.88 96.94 -88.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:83:13:20) mark_URI
+gsave 095.6222 -89.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 041.1306 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.4046 003.3122 000.0800 draw_round_box
+grestore
+gsave 095.6872 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 002.3893 000.3122 000.0800 draw_round_box
+grestore
+94.44 -77.10 96.08 -76.72 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:40:17:24) mark_URI
+gsave 093.5779 -78.3264 translate
+0 0 moveto
+001.2773 001.6172 002.0831 001.6172 002.5023 001.2250 000.8581 001.2250 002.0831 001.7372 001.2773 001.7372 000.8581 001.2250 002.5023 001.2250 000.0800 draw_bezier_sandwich
+grestore
+44.93 -76.88 46.24 -75.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:35:23:30) mark_URI
+gsave 044.9266 -76.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 043.1099 -78.9457 translate
+0 0 moveto
+001.9067 -00.0044 001.9067 -00.4044 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 041.0656 -78.7311 translate
+0 0 moveto
+002.1343 -00.0283 002.1343 -00.4283 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 039.0214 -78.5164 translate
+0 0 moveto
+002.1343 -00.0283 002.1343 -00.4283 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 096.8734 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 049.6536 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+97.67 -78.38 98.98 -77.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:40:23:30) mark_URI
+gsave 097.6664 -77.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 097.7314 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 002.1900 000.3122 000.0800 draw_round_box
+grestore
+52.49 -91.38 53.81 -90.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:79:5:12) mark_URI
+gsave 052.4909 -90.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 095.6222 -80.7157 translate
+0 0 moveto
+002.1343 000.4119 002.1343 000.0119 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 093.5779 -80.9150 translate
+0 0 moveto
+002.1343 000.4119 002.1343 000.0119 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 091.3061 -81.1364 translate
+0 0 moveto
+002.3618 000.4341 002.3618 000.0341 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+56.58 -76.88 57.90 -75.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:36:11:18) mark_URI
+gsave 056.5795 -76.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+102.04 -91.88 103.36 -90.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:84:1:8) mark_URI
+gsave 102.0423 -91.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+59.44 -79.38 60.44 -77.51 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:36:16:23) mark_URI
+gsave 059.4410 -78.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+gsave 061.2991 -81.2864 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /flags.d3 glyphshow 
+grestore
+gsave 061.2341 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 003.0000 000.3122 000.0800 draw_round_box
+grestore
+gsave 103.2934 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 019.6703 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+70.55 -78.88 71.87 -77.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:39:9:16) mark_URI
+gsave 070.5501 -78.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+25.71 -91.38 27.03 -90.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:77:14:21) mark_URI
+gsave 025.7104 -90.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 070.6151 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 003.1900 -00.1878 000.0800 draw_round_box
+grestore
+64.64 -91.88 65.96 -90.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:82:1:8) mark_URI
+gsave 064.6449 -91.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 037.0421 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.0000 003.3122 000.0800 draw_round_box
+grestore
+gsave 039.0864 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.1900 002.8122 000.0800 draw_round_box
+grestore
+43.11 -89.88 44.43 -88.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:78:14:21) mark_URI
+gsave 043.1099 -89.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 005.5687 -75.2423 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.0673828125 output-scale div scalefont setfont
+ gsave /six glyphshow grestore 0.96 0.00 rmoveto 
+ grestore
+grestore
+gsave 050.5117 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.3967 002.3122 000.0800 draw_round_box
+grestore
+gsave 006.4906 -79.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /clefs.G glyphshow 
+grestore
+54.54 -77.38 55.85 -76.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:36:9:16) mark_URI
+gsave 054.5352 -76.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 010.1106 -78.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 052.4909 -78.9298 translate
+0 0 moveto
+002.1343 -00.0198 002.1343 -00.4198 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 050.4467 -78.7231 translate
+0 0 moveto
+002.1343 -00.0198 002.1343 -00.4198 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 048.4024 -78.5164 translate
+0 0 moveto
+002.1343 -00.0198 002.1343 -00.4198 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+110.85 -89.88 112.17 -88.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:84:16:23) mark_URI
+gsave 110.8545 -89.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 006.4906 -85.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /clefs.F glyphshow 
+grestore
+16.37 -77.38 17.69 -76.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:34:5:12) mark_URI
+gsave 016.3748 -76.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 010.1106 -87.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 011.0306 -85.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 011.9506 -87.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 040.2726 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+22.96 -89.88 24.28 -88.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:77:10:17) mark_URI
+gsave 022.9626 -89.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 030.9793 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.0000 004.3122 000.0800 draw_round_box
+grestore
+35.00 -73.38 36.32 -72.28 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:35:5:12) mark_URI
+gsave 035.0029 -72.8264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 004.3806 -76.0514 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /brackettips.up glyphshow 
+grestore
+gsave 004.3806 -88.6014 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /brackettips.down glyphshow 
+grestore
+gsave 004.3806 -82.3264 translate
+0 0 moveto
+000.0000 000.4500 006.0950 006.0950 000.0000 draw_round_box
+grestore
+gsave 005.6306 -82.3264 translate
+0 0 moveto
+000.0000 000.1600 006.0500 006.0500 000.1000 draw_round_box
+grestore
+104.90 -91.88 106.22 -90.78 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:84:7:14) mark_URI
+gsave 104.9038 -91.3264 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 018.4841 -78.3264 translate
+0 0 moveto
+000.0650 000.0650 000.9457 001.8122 000.0800 draw_round_box
+grestore
+gsave 106.1550 -86.3264 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 064.0686 -99.9837 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 074.9596 -99.9837 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 026.4166 -99.9837 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 089.2431 -99.9837 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 051.5180 -99.9837 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 101.3748 -99.9837 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 038.9673 -99.9837 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 113.6210 -99.9837 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-09.2310 011.2053 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-09.2310 011.2053 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -104.9837 translate
+0 0 moveto
+-09.2310 011.2053 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -105.9837 translate
+0 0 moveto
+-09.2310 011.2053 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-11.9701 013.9444 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-11.9701 013.9444 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -104.9837 translate
+0 0 moveto
+-11.9701 013.9444 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -105.9837 translate
+0 0 moveto
+-11.9701 013.9444 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-14.9187 016.8930 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-14.9187 016.8930 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-17.6579 019.6321 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-17.6579 019.6321 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-21.7817 023.7560 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-21.7817 023.7560 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -104.9837 translate
+0 0 moveto
+-21.7817 023.7560 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-24.5208 026.4951 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-24.5208 026.4951 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -104.9837 translate
+0 0 moveto
+-24.5208 026.4951 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-27.4694 029.4437 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-30.2086 032.1828 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-34.3324 036.3066 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-34.3324 036.3066 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-37.0715 039.0458 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-37.0715 039.0458 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-40.0201 041.9944 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-42.7592 044.7335 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-46.8831 048.8573 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-46.8831 048.8573 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -104.9837 translate
+0 0 moveto
+-46.8831 048.8573 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-49.6222 051.5964 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-49.6222 051.5964 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -104.9837 translate
+0 0 moveto
+-49.6222 051.5964 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-52.5708 054.5451 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-55.3099 057.2842 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-59.4337 061.4080 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-59.4337 061.4080 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -104.9837 translate
+0 0 moveto
+-59.4337 061.4080 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -105.9837 translate
+0 0 moveto
+-59.4337 061.4080 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-62.1729 064.1471 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-62.1729 064.1471 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -104.9837 translate
+0 0 moveto
+-62.1729 064.1471 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -105.9837 translate
+0 0 moveto
+-62.1729 064.1471 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-65.1030 067.1880 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-65.1030 067.1880 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-71.9951 073.9255 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-71.9951 073.9255 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-74.0255 075.9121 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-74.0255 075.9121 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-76.0121 077.8986 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-77.9986 079.9291 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-80.4844 082.4587 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-80.4844 082.4587 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-84.6082 086.5825 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-87.1379 089.1121 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-87.1379 089.1121 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-90.0865 092.0608 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-92.6161 094.5904 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-92.6161 094.5904 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-96.7399 098.7142 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-99.2696 101.2438 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-99.2696 101.2438 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-102.0087 103.9830 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -103.9837 translate
+0 0 moveto
+-102.0087 103.9830 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -104.9837 translate
+0 0 moveto
+-102.0087 103.9830 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -102.9837 translate
+0 0 moveto
+-104.9573 106.9316 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -101.9837 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -100.9837 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -99.9837 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -98.9837 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -97.9837 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+68.19 -106.53 69.51 -105.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:89:4:11) mark_URI
+gsave 068.1925 -105.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+71.14 -105.03 72.53 -103.93 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:89:7:14) mark_URI
+gsave 071.1411 -104.4837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s1 glyphshow 
+grestore
+gsave 072.4661 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 004.2386 000.0000 000.0800 draw_round_box
+grestore
+15.25 -106.53 16.57 -105.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:85:1:8) mark_URI
+gsave 015.2506 -105.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+17.99 -106.53 19.31 -105.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:85:4:11) mark_URI
+gsave 017.9897 -105.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+76.34 -101.03 77.34 -99.16 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:92:1:8) mark_URI
+gsave 076.3443 -99.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.3 glyphshow 
+grestore
+20.94 -105.03 22.25 -103.93 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:85:7:14) mark_URI
+gsave 020.9383 -104.4837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+73.35 -97.13 76.95 -94.45 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:90:1:8) mark_URI
+gsave 073.4936 -97.1337 translate
+0 0 moveto
+000.1471 003.4590 0 000.1000 000.0000 draw_round_box
+grestore
+gsave 073.4936 -94.5495 translate
+0 0 moveto
+000.1471 003.4590 0 000.1000 000.0000 draw_round_box
+grestore
+gsave 073.3465 -96.7476 translate
+0 0 moveto
+0 000.1000 000.2861 002.1982 000.0000 draw_round_box
+grestore
+gsave 076.8527 -96.7476 translate
+0 0 moveto
+0 000.1000 000.2861 002.1982 000.0000 draw_round_box
+grestore
+gsave 073.4936 -96.7476 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Bold  findfont 4.869140625 output-scale div scalefont setfont
+ gsave /one glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /seven glyphshow grestore 1.60 0.00 rmoveto 
+ grestore
+grestore
+23.68 -105.03 24.99 -103.93 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:85:11:18) mark_URI
+gsave 023.6775 -104.4837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+46.04 -103.53 47.36 -102.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:87:9:16) mark_URI
+gsave 046.0397 -102.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 031.7916 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+78.01 -105.03 79.33 -103.93 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:92:4:11) mark_URI
+gsave 078.0147 -104.4837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 034.7402 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 079.2659 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 037.4793 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+80.00 -104.53 81.32 -103.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:92:9:16) mark_URI
+gsave 080.0013 -103.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+40.35 -105.03 41.67 -103.93 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:87:1:8) mark_URI
+gsave 040.3520 -104.4837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 081.2524 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 041.6031 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+83.97 -103.53 85.29 -102.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:92:13:20) mark_URI
+gsave 083.9744 -102.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 081.1874 -99.9837 translate
+0 0 moveto
+002.0766 000.2000 002.0766 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 079.2009 -99.9837 translate
+0 0 moveto
+002.0766 000.2000 002.0766 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 085.2256 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+43.09 -105.03 44.41 -103.93 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:87:5:12) mark_URI
+gsave 043.0911 -104.4837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+86.50 -105.03 87.82 -103.93 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:92:18:25) mark_URI
+gsave 086.5040 -104.4837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+48.78 -103.53 50.10 -102.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:87:13:20) mark_URI
+gsave 048.7788 -102.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 087.7552 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+90.63 -103.53 91.94 -102.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:93:1:8) mark_URI
+gsave 090.6278 -102.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 091.8790 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 056.8930 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 059.8416 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 062.5807 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+65.45 -106.53 66.77 -105.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:89:1:8) mark_URI
+gsave 065.4533 -105.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 066.7045 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 005.8122 000.0000 000.0800 draw_round_box
+grestore
+93.16 -105.03 94.47 -103.93 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:93:6:13) mark_URI
+gsave 093.1575 -104.4837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 094.4086 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+96.11 -103.53 97.42 -102.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:93:10:17) mark_URI
+gsave 096.1061 -102.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 097.3573 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 019.2409 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 005.8122 000.0000 000.0800 draw_round_box
+grestore
+98.64 -105.03 99.95 -103.93 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:93:14:21) mark_URI
+gsave 098.6357 -104.4837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 099.8869 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 024.9286 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 029.0525 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+102.76 -103.53 104.08 -102.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:94:1:8) mark_URI
+gsave 102.7595 -102.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+30.54 -105.53 31.86 -104.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:86:5:12) mark_URI
+gsave 030.5404 -104.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 104.0107 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+36.23 -103.53 37.54 -102.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:86:14:21) mark_URI
+gsave 036.2281 -102.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 047.2909 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 050.0300 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 054.1538 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+105.29 -105.03 106.61 -103.93 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:94:5:12) mark_URI
+gsave 105.2892 -104.4837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+55.64 -105.53 56.96 -104.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:88:7:14) mark_URI
+gsave 055.6418 -104.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 106.5403 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+61.33 -103.53 62.65 -102.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:88:16:23) mark_URI
+gsave 061.3295 -102.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+108.03 -105.53 109.34 -104.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:94:9:16) mark_URI
+gsave 108.0283 -104.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 109.2795 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 016.5018 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 005.8122 000.0000 000.0800 draw_round_box
+grestore
+110.98 -103.53 112.29 -102.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:94:13:20) mark_URI
+gsave 110.9769 -102.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 112.2281 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+27.80 -105.53 29.12 -104.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:86:1:8) mark_URI
+gsave 027.8013 -104.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+33.49 -103.53 34.81 -102.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:86:9:16) mark_URI
+gsave 033.4890 -102.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 004.6127 -96.9337 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.0673828125 output-scale div scalefont setfont
+ gsave /one glyphshow grestore 0.96 0.00 rmoveto 
+ gsave /two glyphshow grestore 0.96 0.00 rmoveto 
+ grestore
+grestore
+gsave 044.3423 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 006.4906 -98.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /clefs.F glyphshow 
+grestore
+gsave 010.1106 -100.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 011.0306 -99.4837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 011.9506 -101.4837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 083.2390 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 003.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 022.1895 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+52.90 -105.53 54.22 -104.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:88:1:8) mark_URI
+gsave 052.9027 -104.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 069.4436 -99.9837 translate
+0 0 moveto
+000.0650 000.0650 005.8122 000.0000 000.0800 draw_round_box
+grestore
+58.59 -103.53 59.91 -102.43 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:88:11:18) mark_URI
+gsave 058.5904 -102.9837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+81.99 -104.03 83.30 -102.93 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:92:11:18) mark_URI
+gsave 081.9878 -103.4837 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 065.5717 -113.6411 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 077.8315 -113.6411 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 026.1141 -113.6411 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 090.0912 -113.6411 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 053.3120 -113.6411 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 102.3509 -113.6411 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 041.0523 -113.6411 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 112.7210 -113.6411 translate
+0 0 moveto
+000.0000 000.1900 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 113.2110 -113.6411 translate
+0 0 moveto
+000.0000 000.6000 002.0500 002.0500 000.0000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-09.2310 011.2053 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -117.6411 translate
+0 0 moveto
+-09.2310 011.2053 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -118.6411 translate
+0 0 moveto
+-09.2310 011.2053 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-12.2143 014.1886 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-14.7697 016.7440 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -117.6411 translate
+0 0 moveto
+-14.7697 016.7440 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-17.3251 019.2994 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -117.6411 translate
+0 0 moveto
+-17.3251 019.2994 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -118.6411 translate
+0 0 moveto
+-17.3251 019.2994 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -119.6411 translate
+0 0 moveto
+-17.3251 019.2994 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-21.4907 023.4283 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -117.6411 translate
+0 0 moveto
+-21.4907 023.4283 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-23.5283 025.4291 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -117.6411 translate
+0 0 moveto
+-23.5283 025.4291 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-25.5291 027.4299 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -117.6411 translate
+0 0 moveto
+-25.5291 027.4299 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-27.5299 029.4307 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-29.5307 031.4682 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-32.2633 034.2376 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-36.4289 038.4032 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-38.9844 040.9586 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -117.6411 translate
+0 0 moveto
+-38.9844 040.9586 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-41.9677 043.9419 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-44.5231 046.4973 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -117.6411 translate
+0 0 moveto
+-44.5231 046.4973 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-48.6887 050.6629 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-51.2441 053.2183 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -117.6411 translate
+0 0 moveto
+-51.2441 053.2183 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-54.0134 055.9877 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -117.6411 translate
+0 0 moveto
+-54.0134 055.9877 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -118.6411 translate
+0 0 moveto
+-54.0134 055.9877 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-56.7828 058.7571 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -117.6411 translate
+0 0 moveto
+-56.7828 058.7571 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -118.6411 translate
+0 0 moveto
+-56.7828 058.7571 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-60.9484 062.9227 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-63.7178 065.6920 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-66.2732 068.2474 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -117.6411 translate
+0 0 moveto
+-66.2732 068.2474 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-69.0425 071.0168 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -117.6411 translate
+0 0 moveto
+-69.0425 071.0168 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-73.2081 075.1824 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-75.9775 077.9518 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-78.5329 080.5072 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -117.6411 translate
+0 0 moveto
+-78.5329 080.5072 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -118.6411 translate
+0 0 moveto
+-78.5329 080.5072 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-81.3022 083.2765 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -117.6411 translate
+0 0 moveto
+-81.3022 083.2765 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -118.6411 translate
+0 0 moveto
+-81.3022 083.2765 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-85.4679 087.4421 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-88.2372 090.2115 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-90.7926 092.7669 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -117.6411 translate
+0 0 moveto
+-90.7926 092.7669 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-93.5620 095.5362 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -117.6411 translate
+0 0 moveto
+-93.5620 095.5362 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-97.7276 099.7019 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -116.6411 translate
+0 0 moveto
+-100.4969 102.4712 000.1000 000.1000 000.2000 draw_round_box
+grestore
+gsave 005.6906 -115.6411 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -114.6411 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -113.6411 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -112.6411 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+gsave 005.6906 -111.6411 translate
+0 0 moveto
+1 setlinecap 1 setlinejoin 000.1000 setlinewidth 000.0500 000.0000 moveto 108.0705 000.0000 lineto stroke
+grestore
+69.74 -117.19 71.05 -116.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:99:6:13) mark_URI
+gsave 069.7374 -116.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 070.9885 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 019.4851 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 022.0405 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+72.29 -118.69 73.61 -117.59 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:99:10:17) mark_URI
+gsave 072.2928 -118.1411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 073.5439 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 024.5959 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 005.8122 000.0000 000.0800 draw_round_box
+grestore
+27.51 -118.69 28.83 -117.59 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:96:1:8) mark_URI
+gsave 027.5103 -118.1411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 028.7615 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+75.06 -118.69 76.38 -117.59 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:99:14:21) mark_URI
+gsave 075.0621 -118.1411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 076.3133 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+79.23 -117.19 80.54 -116.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:100:1:8) mark_URI
+gsave 079.2277 -116.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+29.51 -118.69 30.83 -117.59 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:96:6:13) mark_URI
+gsave 029.5111 -118.1411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 080.4789 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+31.51 -118.19 32.83 -117.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:96:10:17) mark_URI
+gsave 031.5119 -117.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+33.51 -117.69 34.83 -116.59 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:96:12:19) mark_URI
+gsave 033.5128 -117.1411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+35.51 -117.19 36.83 -116.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:96:14:21) mark_URI
+gsave 035.5136 -116.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 036.7648 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 039.5341 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 003.3122 000.0000 000.0800 draw_round_box
+grestore
+42.45 -117.19 43.76 -116.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:97:1:8) mark_URI
+gsave 042.4485 -116.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 043.6997 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+82.00 -117.19 83.31 -116.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:100:5:12) mark_URI
+gsave 081.9971 -116.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 083.2483 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+84.55 -119.19 85.87 -118.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:100:9:16) mark_URI
+gsave 084.5525 -118.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 085.8037 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+45.00 -118.69 46.32 -117.59 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:97:6:13) mark_URI
+gsave 045.0039 -118.1411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+47.99 -117.19 49.30 -116.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:97:10:17) mark_URI
+gsave 047.9872 -116.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+87.32 -119.19 88.64 -118.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:100:14:21) mark_URI
+gsave 087.3218 -118.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 088.5730 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+50.54 -118.69 51.86 -117.59 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:97:14:21) mark_URI
+gsave 050.5427 -118.1411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+91.49 -117.19 92.80 -116.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:101:1:8) mark_URI
+gsave 091.4875 -116.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 064.0536 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 092.7386 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+gsave 058.5149 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 061.2842 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+66.97 -117.19 68.28 -116.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:99:1:8) mark_URI
+gsave 066.9680 -116.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 068.2192 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+94.26 -117.19 95.57 -116.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:101:6:13) mark_URI
+gsave 094.2568 -116.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 095.5080 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+18.23 -117.19 19.55 -116.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:95:6:13) mark_URI
+gsave 018.2339 -116.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+96.81 -118.69 98.13 -117.59 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:101:10:17) mark_URI
+gsave 096.8122 -118.1411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 098.0634 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+23.34 -120.19 24.66 -119.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:95:15:22) mark_URI
+gsave 023.3447 -119.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+99.58 -118.69 100.90 -117.59 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:101:14:21) mark_URI
+gsave 099.5816 -118.1411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 100.8328 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 032.7631 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 003.8122 000.0000 000.0800 draw_round_box
+grestore
+gsave 032.6981 -113.6411 translate
+0 0 moveto
+002.0908 000.2000 002.0908 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 030.6973 -113.6411 translate
+0 0 moveto
+002.0908 000.2000 002.0908 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+gsave 028.6965 -113.6411 translate
+0 0 moveto
+002.0908 000.2000 002.0908 -00.2000 000.0400 -00.2000 000.0400 000.2000 4 000.0800 true  draw_polygon
+grestore
+103.75 -117.19 105.06 -116.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:102:1:8) mark_URI
+gsave 103.7472 -116.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 104.9984 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+15.25 -119.19 16.57 -118.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:95:1:8) mark_URI
+gsave 015.2506 -118.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 046.2551 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 051.7938 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 055.9595 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+57.26 -118.69 58.58 -117.59 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:98:6:13) mark_URI
+gsave 057.2637 -118.1411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+106.52 -117.19 107.83 -116.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:102:5:12) mark_URI
+gsave 106.5165 -116.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+106.27 -118.39 108.07 -117.39 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:102:8:15) mark_URI
+gsave 107.1746 -117.8911 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /scripts.sforzato glyphshow 
+grestore
+gsave 107.7677 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+109.29 -113.64 110.79 -113.02 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:102:11:18) mark_URI
+gsave 109.2859 -113.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /rests.1 glyphshow 
+grestore
+gsave 034.7639 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 003.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 004.6127 -110.5569 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.0673828125 output-scale div scalefont setfont
+ gsave /two glyphshow grestore 0.96 0.00 rmoveto 
+ gsave /zero glyphshow grestore 0.96 0.00 rmoveto 
+ grestore
+grestore
+62.80 -119.19 64.12 -118.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:98:14:21) mark_URI
+gsave 062.8024 -118.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 006.4906 -112.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /clefs.F glyphshow 
+grestore
+gsave 010.1106 -114.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 011.0306 -113.1411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+gsave 011.9506 -115.1411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /accidentals.M2 glyphshow 
+grestore
+54.71 -117.19 56.02 -116.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:98:1:8) mark_URI
+gsave 054.7083 -116.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+60.03 -119.19 61.35 -118.09 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:98:10:17) mark_URI
+gsave 060.0330 -118.6411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 016.5018 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 004.8122 000.0000 000.0800 draw_round_box
+grestore
+38.28 -117.69 39.60 -116.59 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:96:19:26) mark_URI
+gsave 038.2829 -117.1411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 049.2384 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 002.8122 000.5000 000.0800 draw_round_box
+grestore
+20.79 -118.69 22.11 -117.59 (textedit://C:/Documents%20and%20Settings/Administrator/Desktop/Music/Lilypond%20Music/Pep%20Band/Grapes%20of%20Wrath.ly:95:11:18) mark_URI
+gsave 020.7893 -118.1411 translate
+0 0 moveto
+magfontemmentaler-20mXVo setfont /noteheads.s2 glyphshow 
+grestore
+gsave 030.7623 -113.6411 translate
+0 0 moveto
+000.0650 000.0650 004.3122 000.0000 000.0800 draw_round_box
+grestore
+gsave 031.4397 -163.1346 translate
+0 0 moveto
+0.03 -0.44 56.59 1.64 (http://lilypond.org/web/) mark_URI
+grestore
+gsave 031.4397 -163.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /M glyphshow grestore 2.08 0.00 rmoveto 
+ gsave /u glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.02 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /c glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /g glyphshow grestore 1.25 0.00 rmoveto 
+ gsave /r glyphshow grestore 0.98 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.16 0.00 rmoveto 
+ gsave /v glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /g glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /b glyphshow grestore 1.17 0.00 rmoveto 
+ gsave /y glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /L glyphshow grestore 1.47 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.62 0.00 rmoveto 
+ gsave /y glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /P glyphshow grestore 1.47 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /d glyphshow grestore 1.26 0.00 rmoveto 
+ grestore
+grestore
+gsave 061.6638 -163.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ grestore
+grestore
+gsave 062.2638 -163.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /two glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /period glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /eight glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /period glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /six glyphshow grestore 1.23 0.00 rmoveto 
+ grestore
+grestore
+gsave 067.6780 -163.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /emdash glyphshow grestore 2.19 0.00 rmoveto 
+ grestore
+grestore
+gsave 070.4632 -163.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /w glyphshow grestore 1.71 0.00 rmoveto 
+ gsave /w glyphshow grestore 1.71 0.00 rmoveto 
+ gsave /w glyphshow grestore 1.54 0.00 rmoveto 
+ gsave /period glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.62 0.00 rmoveto 
+ gsave /y glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /p glyphshow grestore 1.26 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /d glyphshow grestore 1.26 0.00 rmoveto 
+ gsave /period glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /r glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /g glyphshow grestore 1.20 0.00 rmoveto 
+ grestore
+grestore
+gsave 028.8524 -160.1346 translate
+0 0 moveto
+gsave 
+  /CenturySchL-Roma  findfont 3.865234375 output-scale div scalefont setfont
+ gsave /F glyphshow grestore 1.49 0.00 rmoveto 
+ gsave /r glyphshow grestore 0.99 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /m glyphshow grestore 1.95 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /V glyphshow grestore 1.42 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /g glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /g glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /T glyphshow grestore 1.43 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /e glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.02 0.00 rmoveto 
+ gsave /comma glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /one glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /nine glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /nine glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /four glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /B glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /o glyphshow grestore 1.09 0.00 rmoveto 
+ gsave /b glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /d glyphshow grestore 1.26 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /L glyphshow grestore 1.47 0.00 rmoveto 
+ gsave /a glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /r glyphshow grestore 1.03 0.00 rmoveto 
+ gsave /r glyphshow grestore 1.03 0.00 rmoveto 
+ gsave /y glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /P glyphshow grestore 1.47 0.00 rmoveto 
+ gsave /u glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /b glyphshow grestore 1.23 0.00 rmoveto 
+ gsave /l glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /s glyphshow grestore 1.02 0.00 rmoveto 
+ gsave /h glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /i glyphshow grestore 0.68 0.00 rmoveto 
+ gsave /n glyphshow grestore 1.33 0.00 rmoveto 
+ gsave /g glyphshow grestore 1.20 0.00 rmoveto 
+ gsave /space glyphshow grestore 0.61 0.00 rmoveto 
+ gsave /parenleft glyphshow grestore 0.72 0.00 rmoveto 
+ gsave /A glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /S glyphshow grestore 1.40 0.00 rmoveto 
+ gsave /C glyphshow grestore 1.55 0.00 rmoveto 
+ gsave /A glyphshow grestore 1.60 0.00 rmoveto 
+ gsave /P glyphshow grestore 1.47 0.00 rmoveto 
+ gsave /parenright glyphshow grestore 0.72 0.00 rmoveto 
+ grestore
+grestore
+stroke grestore 
+showpage
+%%Trailer
+%%EOF
