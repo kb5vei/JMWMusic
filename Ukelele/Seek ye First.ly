@@ -1,5 +1,5 @@
 \version "2.7.39"
-
+\include "predefined-ukulele-fretboards.ly"
 \header {
        title = "Seek Ye First"
        subtitle  = "For Ukelele"
@@ -20,7 +20,7 @@
       c1
       g1
       a1:m
-      e1:m 
+      e1:m
       f1
       c1
       d1:7
@@ -36,36 +36,32 @@
 
       
     }
+    fretBoards = {  \set Staff.stringTunings = #ukulele-tuning
+        \override FretBoard.fret-diagram-details.finger-code = #'in-dot
+        \myChords}
+
      vocals =  \relative c' {
         \key c\major 
-        e2 ^\markup {
-      \fret-diagram-terse #"o;o;o;3;"
-    } e4 ( f4 ) | 
-        g2 ^\markup {
-      \fret-diagram-terse #"o;2;3;2;"}
-         e4 ( d4 ) 
-        c4 ( ^\markup {
-      \fret-diagram-terse #"o;o;o;3;"
-     } a4 c4 ) d4|
-    e2.  ^\markup {
-      \fret-diagram-terse #"o;3;2;1;"
-     } r4 | \break
+     e2 e4 ( f4 ) | 
+        g2   e4 ( d4 ) 
+        c4  ( a4 c4 ) d4|
+    e2.  r4 | \break
     
-    f2  ^\markup {\fret-diagram-terse #"2;o;1;o;"} g4 ( f4 ) 
-    e2 ^\markup {\fret-diagram-terse #"o;o;o;3;"} f4 ( e4 ) 
-    d1 ( ^\markup {\fret-diagram-terse #"2;2;1;3;"}
-    g2. ) ^\markup {\fret-diagram-terse #"o;2;1;2;"} r4 | \break
+    f2   g4 ( f4 ) 
+    e2  f4 ( e4 ) 
+    d1 ( 
+    g2. )  r4 | \break
 
-    e2 ^\markup {\fret-diagram-terse #"o;o;o;3;"} e4  f4  | 
-    g2 ^\markup {\fret-diagram-terse #"o;2;3;2;"} e4  d4 | 
-    c4  ^\markup {\fret-diagram-terse #"o;o;o;3;"} a4 c4  d4|
-    e2.  ^\markup {\fret-diagram-terse #"o;3;2;1;"} r4 | \break
+    e2  e4  f4  | 
+    g2  e4  d4 | 
+    c4  a4 c4  d4|
+    e2.  r4 | \break
 
 
-    f2 ^\markup {\fret-diagram-terse #"2;o;1;o;"} g4 ( f4)
-    e2 ^\markup {\fret-diagram-terse #"o;o;o;3;"} f4 e 4
-    d1 ^\markup {\fret-diagram-terse #"o;2;1;2;"}
-    c1 ^\markup {\fret-diagram-terse #"o;o;o;3;"}
+    f2  g4 ( f4)
+    e2  f4 e 4
+    d1 
+    c1 
 
       
        
@@ -74,12 +70,14 @@
      }
   
 	\addlyrics { "1. Seek"  ye first the  kingdom of God and his  rit eous ness and all these things shall be add ed un to you Al le lu al le lu ia }
+    \addlyrics { "2. Ask"  "and it" shall be "given un" to you, seek and ye shall find. Knock and the door shall be ope ned un to you Al le lu al le lu ia }
 
 
      \score {
          
         \new StaffGroup <<
            \new ChordNames \myChords
+           \new FretBoards \fretBoards
            \new Staff << \global \vocals >>
 
 

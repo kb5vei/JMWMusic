@@ -1,4 +1,5 @@
 \version "2.7.39"
+\include "predefined-ukulele-fretboards.ly"
 
 \header {
        title = "Ten Little Indians"
@@ -22,22 +23,17 @@
       c1
       g2:7 c2
     }
+
+     fretBoards = {  \set Staff.stringTunings = #ukulele-tuning
+        \override FretBoard.fret-diagram-details.finger-code = #'in-dot
+        \myChords}
+
      vocals =  \relative c'' {
         \key c\major 
-        c8 ^\markup {
-      \fret-diagram-terse #"o;o;o;3;"
-    } c16 c16 c8 c16 c16 e8 g16 g16 e16 e16 c8 | 
-        d8 ^\markup {
-      \fret-diagram-terse #"o;2;3;2;"}
-         d16 d16 d8 d16 d16 b8 d16 d16 b16 b16 g8 |
-        c16 ^\markup {
-      \fret-diagram-terse #"o;o;o;3;"
-     } c 16 c16 c16 c8 c16 c16 e8 g16 g16 e16 e16 c8 |
-    g'8  ^\markup {
-      \fret-diagram-terse #"o;2;1;2;"
-     } f16 f16 e16 e16 d8 c8 ^\markup {
-      \fret-diagram-terse #"o;o;o;3;"
-    } c8 c4  
+        c8  c16 c16 c8 c16 c16 e8 g16 g16 e16 e16 c8 | 
+        d8 d16 d16 d8 d16 d16 b8 d16 d16 b16 b16 g8 |
+        c16 c 16 c16 c16 c8 c16 c16 e8 g16 g16 e16 e16 c8 |
+    g'8  f16 f16 e16 e16 d8 c8 c8 c4 
        
 
         \bar "|."
@@ -50,6 +46,7 @@
          
         \new StaffGroup <<
            \new ChordNames \myChords
+           \new FretBoards \fretBoards
            \new Staff << \global \vocals >>
 
 
