@@ -1,10 +1,11 @@
 \version "2.19.83"
 \include "predefined-ukulele-fretboards.ly"
 \header {
-       title = "Aloha 'Oe"
-       subtitle  = "For Ukelele"
-       composer = "Queen Lili'uokalani"
-       artist = "adapted from Ukelele Underground"
+       title = "Aloha ʻOe"
+
+       subtitle  = "adapted from Ukelele Underground"
+       composer = "Queen Liliʻuokalani"
+       instrument = "Ukelele"
        arranger = "arr. Jonas Williamson"
 }
 
