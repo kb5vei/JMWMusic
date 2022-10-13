@@ -107,7 +107,7 @@ c1}
 	\addlyrics { Ha ʻa- he- o  ka u- a i nā pa- li
 Ke ni- hi aʻe- la i ka na- he- le
 E u- hai a- na pa- ha i ka li- ko
-Pu- a le- hu- a ʻā- hi- hi o u- ka
+Pu- a hi- hi le- hu- a ʻā-  o u- ka
 
 
 A- lo- ha ʻoe, a- lo- ha ʻoe
