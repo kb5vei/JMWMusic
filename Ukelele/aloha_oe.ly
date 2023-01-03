@@ -2,12 +2,11 @@
 \include "predefined-ukulele-fretboards.ly"
 \header {
        title = "Aloha ʻOe"
-
-       subtitle  = "adapted from Ukelele Underground"
        composer = "Queen Liliʻuokalani"
        instrument = "Ukelele"
        arranger = "arr. Jonas Williamson"
-}
+        copyright = \markup { "Music and Lyrics Public Domain.  Arrangement " \char ##x00A9 "Jonas Williamson, 2023" }
+        tagline = ""}
 
 
      global = {
@@ -104,18 +103,18 @@ c1}
         
     
 
-	\addlyrics { Ha ʻa- he- o  ka u- a i nā pa- li
-Ke ni- hi aʻe- la i ka na- he- le
-E u- hai a- na pa- ha i ka li- ko
-Pu- a hi- hi le- hu- a ʻā-  o u- ka
+	\addlyrics { Ha ʻa -- he -- o  ka u -- a i nā pa -- li
+Ke ni -- hi aʻe -- la i ka na -- he -- le
+E u -- hai a -- na pa -- ha i ka li -- ko
+Pu -- a hi -- hi le -- hu -- a ʻā --  o u -- ka
 
 
-A- lo- ha ʻoe, a- lo- ha ʻoe
-E ke o- na- o- na no- ho i ka li- po
-One fond em- brace,
-A ho- ʻi a- ʻe au
-Un- til we meet a- gain A-
-til we meet a- gain.
+A -- lo -- ha ʻoe, a -- lo- ha ʻoe
+E ke o -- na -- o -- na no -- ho i ka li -- po
+One fond em -- brace,
+A ho -- ʻi a -- ʻe au
+Un -- til we meet a -- gain A-
+til we meet a -- gain.
  }
 
 

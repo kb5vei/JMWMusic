@@ -2,9 +2,11 @@
 \include "predefined-ukulele-fretboards.ly"
 \header {
        title = "Seek Ye First"
-       subtitle  = "For Ukelele"
        composer = "Karen Lafferty"
+       instrument = "Ukelele"
        arranger = "arr. Jonas Williamson"
+        copyright = \markup { "Music and Lyrics Public Domain.  Arrangement " \char ##x00A9 "Jonas Williamson, 2023" }
+        tagline = ""
 }
 
 

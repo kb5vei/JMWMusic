@@ -3,9 +3,11 @@
 
 \header {
        title = "Ten Little Indians"
-       subtitle  = "For Ukelele"
        composer = "Folk Song"
+       instrument = "Ukelele"
        arranger = "arr. Jonas Williamson"
+        copyright = \markup { "Music and Lyrics Public Domain.  Arrangement " \char ##x00A9 "Jonas Williamson, 2023" }
+        tagline = ""
 }
 
 
@@ -39,7 +41,7 @@
         \bar "|."
      }
   
-	\addlyrics { "1. One"  lit tle two lit tle three lit tle in di ans, Four lit tle five lit tle six lit tle in di ans, se ven lit tle eight li tle nine li tle in di ans, ten lit tle in di an boys and girls}
+	\addlyrics { "1. One"  lit -- tle two lit -- tle three lit -- tle in -- di -- ans, Four lit -- tle five lit -- tle six lit -- tle in -- di -- ans, se -- ven lit -- tle eight li -- tle nine li -- tle in -- di -- ans, ten lit -- tle in -- di -- an boys and girls!}
 
 
      \score {

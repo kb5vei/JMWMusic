@@ -2,9 +2,12 @@
 \include "predefined-ukulele-fretboards.ly"
 \header {
        title = "Oh Holy Night"
-       subtitle  = "For Ukelele"
        composer = "Traditional"
        arranger = "arr. Jonas Williamson"
+       instrument = "Ukelele"
+       arranger = "arr. Jonas Williamson"
+        copyright = \markup { "Music and Lyrics Public Domain.  Arrangement " \char ##x00A9 "Jonas Williamson, 2023" }
+        tagline = ""
 }
 
 
