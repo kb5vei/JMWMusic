@@ -1,11 +1,12 @@
 \version "2.19.83"
 \include "predefined-ukulele-fretboards.ly"
 \header {
-       title = "My Country 'tis of Thee"
+       title = "Newton's Laws"
+       subtitle = "To the tune of My Country 'tis of Thee"
        composer = "Folk Song"
        instrument = "Ukelele"
        arranger = "arr. Jonas Williamson"
-        copyright = \markup { "Music and Lyrics Public Domain.  Arrangement " \char ##x00A9 "Jonas Williamson, 2023" }
+        copyright = \markup { "Music Public Domain.  Lyrics and arrangement " \char ##x00A9 "Jonas Williamson, 2023" }
         tagline = ""}
 
 
@@ -29,7 +30,7 @@
      c2.:7
      c2.:7
      f2.
-     f2.
+     f1
      bes2.
      f2.
      
@@ -50,23 +51,33 @@
       
         f4 f4 g4 
         e4. f8 g4
-        a4 a4 bes4
+        a4 a4 bes8 bes8
+                \break
+                
         a4. g8 f4
-        \break
+
         
         g4 f4 e4 
         f2.
+                \break
+                
         c'4 c4 c4
         c4. bes8 a4
-        \break
-        
         bes4 bes bes 
-        bes4. a8 g4
-        a4 bes8 ( a ) g (f)
-        a4. bes8 c4 
         \break
+
+        bes4. a8 g4
+        a4 bes8  a  g f
+        \numericTimeSignature
+        \time 4/4
+                \break
+        a4 a4. bes8 c4 
         
-        d8 ( bes8 ) a4 g4
+
+        \time 3/4
+        d8  bes8  a4 g4
+        
+        
         f2.
          
         
@@ -82,7 +93,9 @@
          
     
 
-	\addlyrics {My coun -- try  'tis of thee, sweet land of lib -- er -- ty, of thee I sing; Land where my fa -- thers died, land of the pil -- grim's pride, from ev -- ery  moun -- tain -- side let free -- dom ring!}
+	\addlyrics {Ob -- jects at rest will stay, ob -- jects that move go a -- way, New -- ton's first law.  Net force is m times a, Force will ac -- cel -- er -- ate an ob -- ject on a path curved or straight, 
+	New -- ton's Sec -- ond law.  }
+	\addlyrics {When a force is ap -- piled, a re -- ac -- - tion is spied, at the same time.  E -- qual and op -- po -- site, like a pro -- jec -- tile's kick, for ev - ery - force: push   or pull, New ton's third - law.  }
 
 
 
