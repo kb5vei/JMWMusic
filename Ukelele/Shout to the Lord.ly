@@ -70,7 +70,64 @@
         \key c\major 
      r4 e4 f4 g4
     r4 b,4 c4 d4
+    c'8 c8 c8 b8 ~ b8 g8 ( e8 ) a8 ~ 
+    \break 
+
+    a4 r4 c8 b8 a8 g8 ~ 
+    g4 r4 c8 b8 a8 g8 ~ 
+    g4. g8 g8 f8 e8 c8 
+    \break
+
+    d2 d2 
+    d2. r4
+   r4 e4 f4 g4
+    \break
+    r4 b,4 c4 d4
+    c'8 c8 c8 b8 ~ b8 g8  e8  a8 ~ 
+    a4 r4 c8 b8 a8 g8 ~ 
+    \break    
+
+    g4 r4 c8 b8 a8 g8 ~
+    g4 r4 c8 c8 a8 c8
+    d2 d2 d2. r4 
+    \break 
+
+    c8 c8 b8 c8 ~ c8 c8 b8 c8 ~
+    c8 c8 b8 a8 ~ a4 r4
+    c8 c8 b8 c8 ~ c8 c8 d8 e8 ~
+    \break 
+
+
+    e8 d8 c8 d8 ~ d4 r4 
+    c8 c8 b8 c8 ~ c8 c8 b8 c8 ~
+    c8 b8 a8 ~ a4. a8 c8 
+\break
+    b8 (g4.)  a4 a4 
+    b2 ( d2 )
+
+
+    c8 c8 b8 c8 ~ c8 c8 b8 c8 ~
+\break
+
+
+
+    c8 c8 b8 a8 ~ a4 r8 a8
+    c8 c8 b8 c8 ~ c8 c8 r8 d8 
+    e8 d8 c8 d8 ~ d4 r4
+
+    \break
+    c8 c8 b8 c8 ~ c8 c4 b8 
+    c8 c8 b8 a4. b4 
+    c1
+
+
     
+    
+
+    
+    
+       
+
       
         
         
@@ -85,7 +142,7 @@
          
     
 
-	\addlyrics {My Je -- sus, my sav -- ior}
+	\addlyrics {My Je -- sus, my sav -- ior, Lord there is none like you.  All of my days I want to praise the won -- ders of your might -- y love.  My com -- fort, my shel -- ter, Tow -- er of ref -- uge and strength, let ev -- ery breath, all that I am, nev -- er cease to wor -- ship you.  Shout to the Lord, all the earth, let us sing; Pow -- er and maj -- es -- ty praise to the King!  Moun -- tains bow down and the seas will roar at the sound of your name. I sing for joy at the work of your hands; for -- ev -- er I'll love you for -- ev -- er I'll stand  no -- thing com -- pares to the pro -- mise I have in you. }
 
 
 
