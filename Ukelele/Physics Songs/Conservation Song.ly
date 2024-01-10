@@ -2,10 +2,10 @@
 \include "predefined-ukulele-fretboards.ly"
 \header {
        title = "Conservation Laws"
-       composer = "Traditional"
+       composer = "Traditional, Lyrics by Jonas Williamson"
        instrument = "Ukelele"
        arranger = "arr. Jonas Williamson"
-        copyright = \markup { "Music and Lyrics Public Domain.  Arrangement " \char ##x00A9 "Jonas Williamson, 2023" }
+        copyright = \markup { "Music Public Domain.  Arrangement and Lyrics " \char ##x00A9 "Jonas Williamson, 2023" }
         tagline = ""}
 
 
